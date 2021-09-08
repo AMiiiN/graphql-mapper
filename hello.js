@@ -20,5 +20,3 @@ graphql(schema, '{ hello, name, age }', root).then((response) => {
   console.log("Name: " + response.data.name);
   console.log("Age: " + response.data.age)
 });
-
-// Test
