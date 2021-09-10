@@ -1,5 +1,7 @@
 var { graphql, buildSchema } = require('graphql');
+const fs = require('fs');
 
+/*
 var schema = buildSchema(`
   type Query {
     hello: String,
@@ -7,6 +9,13 @@ var schema = buildSchema(`
     age: Int
   }
 `);
+*/
+
+const input_data = fs.readFileSync('data/sample-schema.gql').toString();
+console.log("File read in.");
+
+var schema = buildSchema(input_data);
+console.log("Schema built successfully.");
 
 var root = {
   hello: () => 'Hello world!',

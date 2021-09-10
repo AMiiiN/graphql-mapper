@@ -1,0 +1,77 @@
+type Agents {
+        AGENT_CODE: String!
+        AGENT_NAME: String
+        WORKING_AREA: String
+        COMMISSION: Float
+        PHONE_NO: String
+        COUNTRY: String
+}
+type Company {
+        COMPANY_ID: String!
+        COMPANY_NAME: String
+        COMPANY_CITY: String
+}
+type Customer {
+        CUST_CODE: String!
+        CUST_NAME: String!
+        CUST_CITY: String
+        WORKING_AREA: String!
+        CUST_COUNTRY: String!
+        GRADE: Float
+        OPENING_AMT: Float!
+        RECEIVE_AMT: Float!
+        PAYMENT_AMT: Float!
+        OUTSTANDING_AMT: Float!
+        PHONE_NO: String!
+        AGENT_CODE: String
+}
+type Daysorder {
+        ORD_NUM: Float!
+        ORD_AMOUNT: Float!
+        ADVANCE_AMOUNT: Float!
+        CUST_CODE: String!
+        AGENT_CODE: String!
+        ORD_DESCRIPTION: String!
+}
+type Despatch {
+        DES_NUM: String!
+        DES_AMOUNT: Float
+        ORD_NUM: Float
+        ORD_AMOUNT: Float
+        AGENT_CODE: String
+}
+type Foods {
+        ITEM_ID: String!
+        ITEM_NAME: String
+        ITEM_UNIT: String
+        COMPANY_ID: String
+}
+type Listofitem {
+        ITEMCODE: String!
+        ITEMNAME: String!
+        BATCHCODE: String!
+        CONAME: String
+}
+type Orders {
+        ORD_NUM: Float!
+        ORD_AMOUNT: Float!
+        ADVANCE_AMOUNT: Float!
+        CUST_CODE: String!
+        AGENT_CODE: String!
+        ORD_DESCRIPTION: String!
+}
+type Student {
+	NAME: String!
+	TITLE: String!
+	CLASS: String!
+        SECTION: String!
+        ROLLID: Float!
+}
+type Studentreport {
+        CLASS: String!
+        SECTION: String!
+        ROLLID: Float!
+        GRADE: String!
+        SEMISTER: String
+        CLASS_ATTENDED: Float
+}
