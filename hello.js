@@ -1,21 +1,12 @@
 var { graphql, buildSchema } = require('graphql');
 const fs = require('fs');
+var utils = require("./utils");
 
-/*
-var schema = buildSchema(`
-  type Query {
-    hello: String,
-    name: String,
-    age: Int
-  }
-`);
-*/
+// Path to the GraphQL data file
+const src_path = "data/sample.gql";
 
-const input_data = fs.readFileSync('data/sample-schema.gql').toString();
-console.log("File read in.");
-
-var schema = buildSchema(input_data);
-console.log("Schema built successfully.");
+// Create GraphQL schema from file
+var schema = utils.buildSchemaFromPath(src_path);
 
 var root = {
   hello: () => 'Hello world!',
@@ -23,6 +14,7 @@ var root = {
   age: () => 24
 };
 
+// Execute GraphQL query
 graphql(schema, '{ hello, name, age }', root).then((response) => {
   console.log(response);
   console.log("---");
