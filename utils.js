@@ -1,5 +1,6 @@
 const fs = require('fs');
 var { graphql, buildSchema } = require('graphql');
+const { gql } = require('apollo-server');
 
 function buildSchemaFromPath(path) {
   var input_data = fs.readFileSync(path).toString();
@@ -7,4 +8,10 @@ function buildSchemaFromPath(path) {
   return schema;
 }
 
-module.exports = { buildSchemaFromPath };
+function buildApolloSchemaFromPath(path) {
+  var input = fs.readFileSync(path).toString();
+  var schema = gql(input);
+  return schema;
+}
+
+module.exports = { buildSchemaFromPath, buildApolloSchemaFromPath };
