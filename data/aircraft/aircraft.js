@@ -362,4 +362,15 @@ const resolver = {
   }
 };
 
-module.exports = { schema, resolver };
+const { models } = require('./dbconnector')
+const resolverDB = {
+  Query: {
+    async pilots(root, { arg }) {
+      console.log("arg: " + arg);
+      return models.pilots.findAll({});
+    },
+    aircrafts: () => aircrafts
+  }
+};
+
+module.exports = { schema, resolver, resolverDB };
