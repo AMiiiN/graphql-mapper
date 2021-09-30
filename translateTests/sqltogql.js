@@ -4,10 +4,13 @@ const keywords = [
   'WHERE'
 ];
 
-const queries = [
-  "SELECT salary FROM instructor",
-  "SELECT salary, name FROM instructor"
-];
+var inputJSON = require('./extracted_train.json');
+
+var queries = [];
+//for (var i=0; i<inputJSON.queries.length; i++) {
+for (var i=0; i<3; i++) {
+  queries.push(inputJSON.queries[i].query);
+}
 
 var gqlQueries = [];
 // Loop for each SQL query
