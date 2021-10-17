@@ -53,6 +53,8 @@ function handleSelect(query) {
 // Map CREATE TABLE operations
 function handleCreate(query) {
   var graphql_query = "";
+  var tokens = query.split(/\s+/);
+  console.log("Tokens: " + tokens);
   return graphql_query;
 }
 
@@ -92,6 +94,41 @@ function handleDelete(query) {
   return graphql_query;
 }
 
+// Coordinate query handling
+function processQuery(query) {
+  var result = '';
+  // Handle query according to the operation type
+  switch(current_operation_type) {
+    case 'SELECT':
+      result = handleSelect(query);
+      break;
+    case 'CREATE':
+      result = handleCreate(query);
+      break;
+    case 'DROP':
+      result = handleDrop(query);
+      break;
+    case 'ALTER':
+      result = handleAlter(query);
+      break;
+    case 'TRUNCATE':
+      result = handleTruncate(query);
+      break;
+    case 'INSERT':
+      result = handleInsert(query);
+      break;
+    case 'UPDATE':
+      result = handleUpdate(query);
+      break;
+    case 'DELETE':
+      result = handleDelete(query);
+      break;
+    default:
+      console.log("ERROR: Query " + (i+1) + " could not be resolved");
+  }
+  return result;
+}
+
 // Read in sample queries from JSON file
 var inputJSON = require('./extracted_train.json');
 var queries = [];
@@ -111,35 +148,7 @@ for (var i=0; i < queries.length; i++) {
   var current_graphql_result = '';
   var current_operation_type = queries[i].split(" ")[0];
 
-  // Handle query according to the operation type
-  switch(current_operation_type) {
-    case 'SELECT':
-      current_graphql_result = handleSelect(current_sql_query);
-      break;
-    case 'CREATE':
-      current_graphql_result = handleCreate(current_sql_query);
-      break;
-    case 'DROP':
-      current_graphql_result = handleDrop(current_sql_query);
-      break;
-    case 'ALTER':
-      current_graphql_result = handleAlter(current_sql_query);
-      break;
-    case 'TRUNCATE':
-      current_graphql_result = handleTruncate(current_sql_query);
-      break;
-    case 'INSERT':
-      current_graphql_result = handleInsert(current_sql_query);
-      break;
-    case 'UPDATE':
-      current_graphql_result = handleUpdate(current_sql_query);
-      break;
-    case 'DELETE':
-      current_graphql_result = handleDelete(current_sql_query);
-      break;
-    default:
-      console.log("ERROR: Query " + (i+1) + " could not be resolved");
-  }
+  current_graphql_result = processQuery(current_sql_query);
 
   console.log("Original query " + i + ": " + current_sql_query);
   console.log("GraphQL query " + i + " : " + current_graphql_result);
