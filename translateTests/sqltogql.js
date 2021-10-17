@@ -1,3 +1,4 @@
+const minimize_graphql = true;
 const query_type_keywords = [
   'SELECT',
   'CREATE',
@@ -28,12 +29,23 @@ function handleSelect(query) {
     for (var a=0; a<temp.length; a++) {
       key_select += temp[a];
       if (a != temp.length-1) {
-        key_select += ', ';
+        if (minimize_graphql) {
+          key_select += ', ';
+        }
+        else {
+          key_select += ',\n\t\t';
+        }
       }
     }
   }
 
-  result_query = "{ " + key_from + " { " + key_select + " } }";
+  // Put together GraphQL query result according to minimization settings
+  if (minimize_graphql) {
+    result_query = "{ " + key_from + " { " + key_select + " } }";
+  }
+  else {
+    result_query = "\n{\n\t" + key_from + " {\n\t\t" + key_select + " \n\t} \n}";
+  }
 
   return result_query;
 }
