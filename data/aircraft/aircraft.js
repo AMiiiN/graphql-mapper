@@ -44,6 +44,8 @@ const schema = gql(`
     pilotById(id: Int): Pilot
     pilotsOlderThan(age: Int): [Pilot]
     avg(type: String, field: String): Float
+    min(type: String, field: String): Float
+    max(type: String, field: String): Float
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
@@ -355,6 +357,14 @@ const aircraftAirportAssigns = [
   }
 ];
 
+const allTypes = {
+  "pilots": pilots,
+  "aircrafts": aircrafts,
+  "airports": airports,
+  "matches": matches,
+  "aircraftAirportAssigns": aircraftAirportAssigns
+};
+
 const resolver = {
   Query: {
     pilots: () => pilots,
@@ -364,35 +374,21 @@ const resolver = {
     pilotsOlderThan: (obj, args) => {
       return pilots.filter(pilot => pilot.Age >= args.age);
     },
-    avg: (obj, args) => {
-      var type_name = args.type;
-      var field_name = args.field;
-      var average_res = 0;
-      switch(type_name) {
-        case "pilots":
-          average_res = calcAverage(formFieldArrayFromAllInstances(pilots, field_name));
-          break;
-        case "aircrafts":
-          average_res = calcAverage(formFieldArrayFromAllInstances(aircrafts, field_name));
-          break;
-        case "airports":
-          average_res = calcAverage(formFieldArrayFromAllInstances(airports, field_name));
-          break;
-        case "matches":
-          average_res = calcAverage(formFieldArrayFromAllInstances(matches, field_name));
-          break;
-        case 'aircraftAirportAssigns':
-          average_res = calcAverage(formFieldArrayFromAllInstances(aircraftAirportAssigns, field_name));
-          break;
-        default:
-          console.log("Error: invalid type name in GraphQL query for average");
-      }
-      return average_res;
-    },
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
-    aircraftAirportAssigns: () => aircraftAirportAssigns
+    aircraftAirportAssigns: () => aircraftAirportAssigns,
+
+    // Aggregations
+    avg: (obj, args) => {
+      return calcAverage(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+    },
+    max: (obj, args) => {
+      return getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+    },
+    min: (obj, args) => {
+      return getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+    }
   }
 };
 
@@ -402,6 +398,9 @@ const resolverDB = {
     async pilots(root, { arg }) {
       console.log("arg: " + arg);
       return models.pilots.findAll({});
+    },
+    pilotById: (root, arg) => {
+      return models.pilots.findByPk(arg.id);
     },
     aircrafts: () => aircrafts
   }
@@ -416,11 +415,28 @@ function formFieldArrayFromAllInstances(arr, field_name) {
   }
   return res;
 }
-
 function calcAverage(arr) {
   var sum = 0.0;
   for (var i=0; i<arr.length; i++) {
     sum += arr[i];
   }
   return (sum / arr.length);
+}
+function getMax(arr) {
+  var max = arr[0];
+  for (var i=1; i<arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+  return max;
+}
+function getMin(arr) {
+  var min = arr[0];
+  for (var i=1; i<arr.length; i++) {
+    if (arr[i] < min) {
+      min = arr[i];
+    }
+  }
+  return min;
 }
