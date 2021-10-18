@@ -42,6 +42,8 @@ const schema = gql(`
   type Query {
     pilots: [Pilot]
     pilotById(id: Int): Pilot
+    pilotsOlderThan(age: Int): [Pilot]
+    avg(type: String, field: String): Float
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
@@ -359,6 +361,34 @@ const resolver = {
     pilotById: (obj, args) => {
       return pilots.filter(pilot => pilot.Pilot_Id == args.id)[0]; // returns exactly one pilot object
     },
+    pilotsOlderThan: (obj, args) => {
+      return pilots.filter(pilot => pilot.Age >= args.age);
+    },
+    avg: (obj, args) => {
+      var type_name = args.type;
+      var field_name = args.field;
+      var average_res = 0;
+      switch(type_name) {
+        case "pilots":
+          average_res = calcAverage(formFieldArrayFromAllInstances(pilots, field_name));
+          break;
+        case "aircrafts":
+          average_res = calcAverage(formFieldArrayFromAllInstances(aircrafts, field_name));
+          break;
+        case "airports":
+          average_res = calcAverage(formFieldArrayFromAllInstances(airports, field_name));
+          break;
+        case "matches":
+          average_res = calcAverage(formFieldArrayFromAllInstances(matches, field_name));
+          break;
+        case 'aircraftAirportAssigns':
+          average_res = calcAverage(formFieldArrayFromAllInstances(aircraftAirportAssigns, field_name));
+          break;
+        default:
+          console.log("Error: invalid type name in GraphQL query for average");
+      }
+      return average_res;
+    },
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
@@ -378,3 +408,19 @@ const resolverDB = {
 };
 
 module.exports = { schema, resolver, resolverDB };
+
+function formFieldArrayFromAllInstances(arr, field_name) {
+  var res = [];
+  for (var i=0; i<arr.length; i++) {
+    res.push(arr[i][field_name]);
+  }
+  return res;
+}
+
+function calcAverage(arr) {
+  var sum = 0.0;
+  for (var i=0; i<arr.length; i++) {
+    sum += arr[i];
+  }
+  return (sum / arr.length);
+}
