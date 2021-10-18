@@ -14,7 +14,7 @@ const query_type_keywords = [
 function mapFieldType(type) {
   var ground_type = type.split("(")[0]; // ignore size constraints like in VARCHAR(20)
   var result_graphql_type = '';
-  switch(ground_type) {
+  switch(ground_type.toUpperCase()) {
     case 'INTEGER':
       result_graphql_type = 'Int';
       break;
@@ -263,7 +263,7 @@ for (var i=0; i<3; i++) {
 queries.push(`CREATE TABLE contacts (
 	contact_id INTEGER PRIMARY KEY,
 	first_name TEXT NOT NULL,
-	last_name TEXT(11) NOT NULL,
+	last_name varchar(11) NOT NULL,
 	email TEXT NOT NULL UNIQUE,
 	phone TEXT NOT NULL UNIQUE
 );`);
