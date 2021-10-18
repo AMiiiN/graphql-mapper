@@ -41,6 +41,7 @@ const schema = gql(`
   }
   type Query {
     pilots: [Pilot]
+    pilotById(id: Int): Pilot
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
@@ -355,6 +356,9 @@ const aircraftAirportAssigns = [
 const resolver = {
   Query: {
     pilots: () => pilots,
+    pilotById: (obj, args) => {
+      pilots.filter(pilot => pilot.Pilot_Id == args.id)[0]; // returns exactly one pilot object
+    },
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
