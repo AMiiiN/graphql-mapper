@@ -296,6 +296,8 @@ queries.push(`CREATE TABLE pilot (
   PRIMARY KEY (Pilot_Id)
 );`);
 
+queries.push(`SELECT Pilot_Id, Name, avg(Age) FROM pilot`);
+
 var gqlQueries = [];
 // Loop for each SQL query
 
