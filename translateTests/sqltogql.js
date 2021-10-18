@@ -115,6 +115,27 @@ function handleCreate(query) {
 
     // Process the current field field statement
     current_field_tokens = field_statements[i].split(" ").filter(tkn => tkn != '');
+
+    // Check for special PRIMARY KEY ('ID')-like statement
+    if (current_field_tokens[0] == 'PRIMARY') {
+      // Concatenate everything that comes after PRIMARY KEY
+      // Example: PRIMARY KEY (Pilot_Id, Age) => Pilot_Id,Age
+      var toi = current_field_tokens[2].replace("(", "").replace(")", "").replace("\n", "").replace("\t", "");
+
+      // Find that field and get its index
+      for (var j=0; j<field_names.length; j++) {
+        if (field_names[j] == toi) {
+          // Here, j is the index, so set primary key, not null and unique properties
+          field_primary_keys[j] = true;
+          field_not_nulls[j] = true;
+          field_uniques[j] = true;
+          break;  // stop searching further
+        }
+      }
+      break;  // break out of the standard procedure for new field definitions
+    }
+
+    // Standard procedure for new field definitions starts here
     field_names.push(current_field_tokens[0]);  // First token is the field name
     field_types.push(mapFieldType(current_field_tokens[1]));
 
@@ -146,7 +167,6 @@ function handleCreate(query) {
         field_not_nulls.push(false);  // after the 'unique' tag, 'not null' can't follow, it would have to be in front of 'unique'
       }
     }
-
   }
 
   // Build the GraphQL query (minimized)
@@ -269,11 +289,11 @@ queries.push(`CREATE TABLE contacts (
 	phone TEXT(256) NOT NULL UNIQUE
 );`);
 
-
 queries.push(`CREATE TABLE pilot (
   Pilot_Id int(11) NOT NULL,
   Name varchar(50) NOT NULL,
-  Age int(11) NOT NULL
+  Age int(11) NOT NULL,
+  PRIMARY KEY (Pilot_Id)
 );`);
 
 var gqlQueries = [];
