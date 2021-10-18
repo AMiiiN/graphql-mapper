@@ -34,7 +34,7 @@ function mapFieldType(type) {
       result_graphql_type = 'Boolean';
       break;
     default:
-      console.log("Error: Could not determine field type.");
+      console.log("Error: Could not determine field type (" + ground_type + ")");
   }
   return result_graphql_type;
 }
@@ -114,7 +114,7 @@ function handleCreate(query) {
     field_statements[i] = field_statements[i].replace("\t", "");
 
     // Process the current field field statement
-    current_field_tokens = field_statements[i].split(" ");
+    current_field_tokens = field_statements[i].split(" ").filter(tkn => tkn != '');
     field_names.push(current_field_tokens[0]);  // First token is the field name
     field_types.push(mapFieldType(current_field_tokens[1]));
 
@@ -260,12 +260,20 @@ for (var i=0; i<3; i++) {
   queries.push(inputJSON.queries[i].query);
 }
 */
+
 queries.push(`CREATE TABLE contacts (
 	contact_id INTEGER PRIMARY KEY,
 	first_name TEXT NOT NULL,
 	last_name varchar(11) NOT NULL,
 	email TEXT NOT NULL UNIQUE,
-	phone TEXT NOT NULL UNIQUE
+	phone TEXT(256) NOT NULL UNIQUE
+);`);
+
+
+queries.push(`CREATE TABLE pilot (
+  Pilot_Id int(11) NOT NULL,
+  Name varchar(50) NOT NULL,
+  Age int(11) NOT NULL
 );`);
 
 var gqlQueries = [];
