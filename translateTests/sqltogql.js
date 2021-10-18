@@ -91,12 +91,22 @@ function handleCreate(query) {
 
   var first_split = query.split("(");
 
+  // If '(' occurs more than once, we need to concatenate the string back together
+  if (first_split.length > 2) { // it does occur more than once
+    var temp_split = [];
+    for (var i=1; i<first_split.length; i++) {
+      temp_split.push(first_split[i]);
+    }
+    temp_split = temp_split.join("(");
+    first_split = [first_split[0], temp_split];
+  }
+
   // First, treat the "CREATE TABLE tableName" part
   var create_table_statement = first_split[0];
   table_name = create_table_statement.split(" ")[2]; // 0: "CREATE", 1: "TABLE", 2: tableName
 
   // Now, treat the field names part
-  var field_statements_total = first_split[1].split(")")[0];
+  var field_statements_total = first_split[1].split(");")[0];
   field_statements = field_statements_total.split(",");
   for (var i=0; i<field_statements.length; i++) {
     // For each statement, remove the newlines and tabs
@@ -152,7 +162,7 @@ function handleCreate(query) {
       }
     }
   }
-  
+
   graphql_query += '{ ';
 
   for (var i=0; i<field_names.length; i++) {
@@ -253,7 +263,7 @@ for (var i=0; i<3; i++) {
 queries.push(`CREATE TABLE contacts (
 	contact_id INTEGER PRIMARY KEY,
 	first_name TEXT NOT NULL,
-	last_name TEXT NOT NULL,
+	last_name TEXT(11) NOT NULL,
 	email TEXT NOT NULL UNIQUE,
 	phone TEXT NOT NULL UNIQUE
 );`);
