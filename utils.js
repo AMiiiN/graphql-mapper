@@ -14,4 +14,13 @@ function buildApolloSchemaFromPath(path) {
   return schema;
 }
 
-module.exports = { buildSchemaFromPath, buildApolloSchemaFromPath };
+function buildQuery(typeName, fieldNames) {
+  var query = "type " + typeName + " {";
+  fieldNames.forEach( (fieldName) => {
+    query += "\n\t" + fieldName;
+  });
+  query += "\n}";
+  return query;
+}
+
+module.exports = { buildSchemaFromPath, buildApolloSchemaFromPath, buildQuery };

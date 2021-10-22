@@ -1,51 +1,66 @@
 var prompt = require("prompt-sync")();
+var distance = require('jaro-winkler');
 
-// Get database columns
-//
-const columns = ['Date', 'Price', 'Volume'];
-const content = [['17-08-2020', '09-01-2021', '24-06-2021'], ['95.80', '101.20', '81.90'], [33, 41, 25]];
+function identifyType(rawInput, typeNames, threshold) {
+  var tokens = rawInput.split(" ");
+  var ratings = [];
 
-var unifiedColumns = [];
-for (var i=0; i<columns.length; i++) {
-    unifiedColumns.push(columns[i].toLowerCase());
+  tokens.forEach( (token) => {
+    typeNames.forEach( (typeName) => {
+      ratings.push({
+        name: typeName,
+        token: token,
+        distance: distance(token.toLowerCase(), typeName.toLowerCase())
+      });
+    });
+  });
+
+  ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  var idTypeName;
+
+  if (ratings.length == 1) {
+    idTypeName = ratings[0].name;
+  }
+  else if (ratings.length == 0) {
+    return null;
+  }
+  else {
+    var highestRatedType;
+    var max = threshold;
+    ratings.forEach( (ratedObject) => {
+      if (ratedObject.distance > max) {
+        max = ratedObject.distance;
+        highestRatedType = ratedObject;
+      }
+    });
+    idTypeName = highestRatedType.name;
+  }
+
+  return idTypeName;
 }
 
-// Create input interface and prompt natural language query
-//
-var nlq = prompt("Please enter your search query: ").toLowerCase();
-//console.log("Your simplified search query is: " + nlq);
+function identifyFields(rawInput, fieldNames, threshold) {
+  var tokens = rawInput.split(" ");
+  var ratings = [];
 
-// Search for occurrence of column names in the NLQ
-//
-var columnOccurs = [];
-for (var i=0; i < unifiedColumns.length; i++) {
-    if (nlq.includes(unifiedColumns[i])) {
-        columnOccurs.push(true);
-    }
-    else {
-        columnOccurs.push(false);
-    }
-}
-//console.log(columnOccurs);
+  tokens.forEach( (token) => {
+    fieldNames.forEach( (fieldName) => {
+      ratings.push({
+        name: fieldName,
+        token: token,
+        distance: distance(token.toLowerCase(), fieldName.toLowerCase())
+      });
+    });
+  });
 
-// Print out requested column(s)
-for (var i=0; i<columns.length; i++) {
-    if (columnOccurs[i] == true) {
-        console.log("Result for '" + columns[i] + "' in 'Transactions': ");
-        console.log(content[i]);
-    }
+  var idFields = [];
+  ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  ratings.forEach( (ratedObject) => {
+    idFields.push(ratedObject.name);
+  });
+
+  console.log(ratings);
+  return idFields;
 }
 
-// ----------------
-// Helper functions
-// ----------------
-
-function countOccurrences(arr, value) {
-    var counter = 0;
-    for(var i=0; i<arr.length; i++) {
-        if (arr[i] == value) {
-            counter++;
-        }
-    }
-    return counter;
-}
+module.exports = { identifyType, identifyFields };
