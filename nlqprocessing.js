@@ -3,6 +3,7 @@ var distance = require('jaro-winkler');
 
 function identifyType(rawInput, typeNames, threshold) {
   var tokens = rawInput.split(" ");
+  tokens = cleanTokens(tokens);
   var ratings = [];
 
   tokens.forEach( (token) => {
@@ -10,7 +11,7 @@ function identifyType(rawInput, typeNames, threshold) {
       ratings.push({
         name: typeName,
         token: token,
-        distance: distance(token.toLowerCase(), typeName.toLowerCase())
+        distance: distance(token, typeName.toLowerCase())
       });
     });
   });
@@ -41,6 +42,7 @@ function identifyType(rawInput, typeNames, threshold) {
 
 function identifyFields(rawInput, fieldNames, threshold) {
   var tokens = rawInput.split(" ");
+  tokens = cleanTokens(tokens);
   var ratings = [];
 
   tokens.forEach( (token) => {
@@ -48,7 +50,7 @@ function identifyFields(rawInput, fieldNames, threshold) {
       ratings.push({
         name: fieldName,
         token: token,
-        distance: distance(token.toLowerCase(), fieldName.toLowerCase())
+        distance: distance(token, fieldName.toLowerCase())
       });
     });
   });
@@ -61,6 +63,19 @@ function identifyFields(rawInput, fieldNames, threshold) {
 
   console.log(ratings);
   return idFields;
+}
+
+function cleanTokens(tokens) {
+  tokens.forEach( (token) => {
+    token = token.toLowerCase();  // bring all tokens to lower case
+    // Remove dots, commas, semicolons, brackets
+    token = token.replace(",", "");
+    token = token.replace(";", "");
+    token = token.replace(".", "");
+    token = token.replace("(", "").replace(")", "");
+  });
+
+  return tokens;
 }
 
 module.exports = { identifyType, identifyFields };
