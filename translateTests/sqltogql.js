@@ -312,6 +312,8 @@ for (var i=0; i < queries.length; i++) {
   current_graphql_result = processQuery(current_sql_query);
 
   //console.log("Original query " + i + ": " + current_sql_query);
-  console.log("GraphQL query " + i + " : " + current_graphql_result);
+  console.log("\nGraphQL query " + i + " : " + current_graphql_result);
 
 }
+
+console.log("\n");
