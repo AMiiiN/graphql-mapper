@@ -16,25 +16,27 @@ function identifyType(rawInput, typeNames, threshold) {
     });
   });
 
-  ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
   var idTypeName;
 
   if (ratings.length == 1) {
     idTypeName = ratings[0].name;
   }
-  else if (ratings.length == 0) {
-    return null;
-  }
   else {
-    var highestRatedType;
-    var max = threshold;
-    ratings.forEach( (ratedObject) => {
-      if (ratedObject.distance > max) {
-        max = ratedObject.distance;
-        highestRatedType = ratedObject;
-      }
-    });
-    idTypeName = highestRatedType.name;
+    if (ratings.length < 1) {
+      return null;
+    }
+    else {
+      var highestRatedType;
+      var max = ratings[0].distance;
+      ratings.forEach( (ratedObject) => {
+        if (ratedObject.distance > max) {
+          max = ratedObject.distance;
+          highestRatedType = ratedObject;
+        }
+      });
+      idTypeName = highestRatedType.name;
+    }
   }
 
   return idTypeName;
@@ -61,7 +63,6 @@ function identifyFields(rawInput, fieldNames, threshold) {
     idFields.push(ratedObject.name);
   });
 
-  console.log(ratings);
   return idFields;
 }
 
