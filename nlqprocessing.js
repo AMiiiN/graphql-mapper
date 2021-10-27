@@ -27,7 +27,7 @@ function identifyType(rawInput, typeNames, threshold) {
       return null;
     }
     else {
-      var highestRatedType;
+      var highestRatedType = ratings[0];
       var max = ratings[0].distance;
       ratings.forEach( (ratedObject) => {
         if (ratedObject.distance > max) {
