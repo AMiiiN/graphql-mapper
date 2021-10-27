@@ -67,16 +67,19 @@ function identifyFields(rawInput, fieldNames, threshold) {
 }
 
 function cleanTokens(tokens) {
+  var new_tokens = [];
   tokens.forEach( (token) => {
-    token = token.toLowerCase();  // bring all tokens to lower case
+    var current_token = token;
+    current_token = current_token.toLowerCase();  // bring all tokens to lower case
     // Remove dots, commas, semicolons, brackets
-    token = token.replace(",", "");
-    token = token.replace(";", "");
-    token = token.replace(".", "");
-    token = token.replace("(", "").replace(")", "");
+    current_token = current_token.replace(",", "");
+    current_token = current_token.replace(";", "");
+    current_token = current_token.replace(".", "");
+    current_token = current_token.replace("(", "").replace(")", "");
+    new_tokens.push(current_token);
   });
 
-  return tokens;
+  return new_tokens;
 }
 
 module.exports = { identifyType, identifyFields };

@@ -14,7 +14,7 @@ const client = new ApolloClient({
 });
 */
 
-const similarityThreshold = 0.75;
+const similarityThreshold = 0.8;
 
 // Get the user input
 var rawInput = prompt("Please enter your query: ");
