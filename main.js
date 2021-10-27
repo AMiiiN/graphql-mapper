@@ -1,9 +1,20 @@
 const distance = require('jaro-winkler');
 const prompt = require("prompt-sync")();
 const { identifyType, identifyFields } = require("./nlqprocessing");
-const { buildQuery } = require("./utils");
+const { buildQuery, buildCurl } = require("./utils");
+const http = require('http');
 
-const similarityThreshold = 0.8;
+/*const { ApolloClient, gql } = require("@apollo/client/core");
+const { cache } = require("./cache");
+
+// Set up Apollo Client
+const client = new ApolloClient({
+  cache,
+  uri: "http://localhost:4000/graphql"
+});
+*/
+
+const similarityThreshold = 0.75;
 
 // Get the user input
 var rawInput = prompt("Please enter your query: ");
@@ -15,8 +26,10 @@ var typeLevelNames = [];
 var fieldLevelNames = [];
 
 // SAMPLES
-typeLevelNames = ['Pilots', 'Aircrafts', 'Airports'];
-fieldLevelNames = [['Name', 'Age', 'Email'], ['Model', 'Brand'], ['Name', 'City', 'Country', 'Passengers per year']];
+typeLevelNames = ['pilots', 'aircrafts', 'airports'];
+fieldLevelNames = [['Name', 'Age', 'Email'],
+['Model', 'Brand', 'Description'],
+['Name', 'City', 'Country', 'Passengers_per_year']];
 // SAMPLES
 
 // Find the one with the highest similarity to the user input
@@ -40,6 +53,44 @@ if (idFieldNames.length == 0) {
 // Notify about the identified types and fields
 console.log("Looking up the fields " + idFieldNames + " in \"" + idTypeName + "\".");
 
-// TODO: Create corresponding GraphQL query
-var generatedQuery = buildQuery(idTypeName, idFieldNames);
+// Build the corresponding GraphQL query
+var generatedQuery = buildQuery(idTypeName, idFieldNames, false);
+var minimizedQuery = buildQuery(idTypeName, idFieldNames, true);
 console.log("Generated query: \n" + generatedQuery);
+
+/*
+// Run the query in the client
+client
+  .query({
+    query: gql(generatedQuery)
+  })
+  .then(result => console.log("Server response: \n" + result));
+  */
+
+// Generate cURL
+var generatedCurl = buildCurl(minimizedQuery);
+console.log("Generated curl: \n" + generatedCurl);
+
+/*
+// Run cURL
+var post_options = {
+  hostname: 'http://localhost:4000/',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+var post_data = "{\"query\":\"" + minimizedQuery + "\"}";
+
+// Set up the request
+ var post_req = http.request(post_options, function(res) {
+   res.setEncoding('utf8');
+   res.on('data', function (chunk) {
+       console.log('\n\nResponse: ' + chunk);
+   });
+ });
+
+ // post the data
+ post_req.write(post_data);
+ post_req.end();
+*/
