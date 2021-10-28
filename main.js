@@ -2,7 +2,7 @@ const distance = require('jaro-winkler');
 const prompt = require("prompt-sync")();
 const { identifyType, identifyFields } = require("./nlqprocessing");
 const { buildQuery, buildCurl } = require("./utils");
-const http = require('http');
+const https = require('https');
 
 /*const { ApolloClient, gql } = require("@apollo/client/core");
 const { cache } = require("./cache");
@@ -70,6 +70,19 @@ client
 // Generate cURL
 var generatedCurl = buildCurl(minimizedQuery);
 console.log("Generated curl: \n" + generatedCurl);
+
+const child_process = require('child_process');
+
+function runCmd(cmd)
+{
+    var resp = child_process.execSync(cmd);
+    var result = resp.toString('UTF8');
+    return result;
+}
+
+var result = runCmd(generatedCurl);
+console.log("Result: ");
+console.log(result);
 
 /*
 // Run cURL
