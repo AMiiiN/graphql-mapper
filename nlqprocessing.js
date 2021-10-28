@@ -17,6 +17,8 @@ function identifyType(rawInput, typeNames, threshold) {
   });
 
   ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  console.log("Identified types: ");
+  console.log(ratings);
   var idTypeName;
 
   if (ratings.length == 1) {
@@ -59,6 +61,8 @@ function identifyFields(rawInput, fieldNames, threshold) {
 
   var idFields = [];
   ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  console.log("Identified fields: ");
+  console.log(ratings);
   ratings.forEach( (ratedObject) => {
     idFields.push(ratedObject.name);
   });
