@@ -1,0 +1,200 @@
+{
+   "queries": [
+      {
+         "query": "List the names of aircrafts and that did not win any match.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which aircraft did not win any match? | What information do you want about the aircrafts? Their names, their ids, or all their information? | Their names.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which pilot won the most matches?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which aircraft won the most matches?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "what is the name and age of the youngest winning pilot?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "In which country  Swan River ' Perth located ?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "How old is Mr. Cristian Halvorson II?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "In which country Mina' Zayid , Abu Dhabi located ?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "what is the name and age of the oldest winning pilot",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "where is Flamengo Beach , Rio de Janeiro situated ? | did you want to return its country? | where its located ?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "List the names of aircrafts and that won matches at least twice.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the names of the aircraft?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "And which of those aircraft won a match?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "How many have won at least two matches?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "what is the name and age of the youngest winning pilot?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Tell me the Location and Country of the Round 1 ?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What is the pilot id of Prof. Zackery Collins ?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What is the name and age of the youngest winning pilot...",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the total number of Domestic Passengers of airports that contain the word \"London\".",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the total number of domestic passengers of airports that contain the word \"London\"?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What about with a name like 'Heathrow'?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "what about international passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Show all information on the airport that has the largest number of international passengers.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which Airport has the largest number of international passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "How many international passengers in that airport?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Show all information on that airport",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Please show the names of aircrafts associated with airport with name \"London Gatwick\".",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "please show the name of all the aircrafts.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "please show the description of the Aircraft Robinson R-22",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Please show the names of aircrafts associated with airport with name \"London Gatwick\".",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the total number of Domestic Passengers of airports that contain the word \"London\".",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "How many total domestic passengers were there?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What about international passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which airport had the most domestic passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the total number of Domestic Passengers of airports that contain the word \"London.\"",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Show all information on the airport that has the largest number of international passengers.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Number of international passengers per airport? | Did you want the names of airports and their number of international passengers? | Yes please.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Which of these has the largest number of intentional passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Ok. Can you show all the information for London Heathrow airport?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the maximum and minimum number of transit passengers of all aiports.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the maximum number of transit passengers of all airports?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What are the minimum number of transit passengers of all airports?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What is the average of all domestic passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "What airport name has the highest amount of international passengers?",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "find the name and age of the pilot who has won the most number of times among the pilots who are younger than 30.",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "The column \"winning_pilot \" in Table: \"MATCH\" refers to column \"pilot_id\" in Table: \" pilot\" | Did  you  mean  that  you  want  to  get Pilot Id? | Yes",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "find the name and age of the pilot who has won the most number of times among the pilot who are younger than 30",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "Show the names of aircrafts that are associated with both an airport named \"London Heathrow\" and an airport named \"London Gatwick\"",
+         "databaseID": "aircraft"
+      },
+      {
+         "query": "plese list me about airports | Do you mean the airport ids of all the airports? | Yes, I just needs the name of aircrafts in airports",
+         "databaseID": "aircraft"
+      }
+   ]
+}
