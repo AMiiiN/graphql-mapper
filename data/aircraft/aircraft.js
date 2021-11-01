@@ -392,6 +392,7 @@ const resolver = {
   }
 };
 
+/* This is for connecting GraphQL to an existing SQLite database
 const { models } = require('./dbconnector')
 const resolverDB = {
   Query: {
@@ -405,9 +406,12 @@ const resolverDB = {
     aircrafts: () => aircrafts
   }
 };
+*/
 
-module.exports = { schema, resolver, resolverDB };
+module.exports = { schema, resolver };
 
+// Helper functions
+//
 function formFieldArrayFromAllInstances(arr, field_name) {
   var res = [];
   for (var i=0; i<arr.length; i++) {
