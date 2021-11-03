@@ -45,7 +45,9 @@ const schema = gql(`
     pilotsOlderThan(age: Int): [Pilot]
     avg(type: String, field: String): Float
     min(type: String, field: String): Float
-    max(type: String, field: String): Float
+    max(type: String, field: String): Float,
+    minInstancePilot(type: String, field: String): [Pilot]
+    maxInstancePilot(type: String, field: String): [Pilot]
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
@@ -388,6 +390,14 @@ const resolver = {
     },
     min: (obj, args) => {
       return getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+    },
+    maxInstancePilot: (obj, args) => {
+      var currentMax = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+      return allTypes[args.type].filter(instance => instance[args.field] >= currentMax);
+    },
+    minInstancePilot: (obj, args) => {
+      var currentMin = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+      return allTypes[args.type].filter(instance => instance[args.field] <= currentMin);
     }
   }
 };

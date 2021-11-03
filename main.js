@@ -1,20 +1,11 @@
 const distance = require('jaro-winkler');
 const prompt = require("prompt-sync")();
-const { identifyType, identifyFields } = require("./nlqprocessing");
+const { identifyOperation, identifyType, identifyFields } = require("./nlqprocessing");
 const { buildQuery, buildCurl } = require("./utils");
 const https = require('https');
 
-/*const { ApolloClient, gql } = require("@apollo/client/core");
-const { cache } = require("./cache");
-
-// Set up Apollo Client
-const client = new ApolloClient({
-  cache,
-  uri: "http://localhost:4000/graphql"
-});
-*/
-
 const similarityThreshold = 0.8;
+const operationTypes = ['avg', 'min', 'max'];
 
 // Get the user input
 var rawInput = prompt("Please enter your query: ");
@@ -31,6 +22,9 @@ fieldLevelNames = [['Name', 'Age', 'Email'],
 ['Model', 'Brand', 'Description'],
 ['Name', 'City', 'Country', 'Passengers_per_year']];
 // SAMPLES
+
+// Find special (aggregated) operation types
+var operationTypeName = identifyOperation(rawInput, 0.9);
 
 // Find the one with the highest similarity to the user input
 var idTypeName = identifyType(rawInput, typeLevelNames, similarityThreshold);
@@ -54,8 +48,8 @@ if (idFieldNames.length == 0) {
 console.log("Looking up the fields " + idFieldNames + " in \"" + idTypeName + "\".");
 
 // Build the corresponding GraphQL query
-var generatedQuery = buildQuery(idTypeName, idFieldNames, false);
-var minimizedQuery = buildQuery(idTypeName, idFieldNames, true);
+var generatedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, false);
+var minimizedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, true);
 console.log("Generated query: \n" + generatedQuery);
 
 /*

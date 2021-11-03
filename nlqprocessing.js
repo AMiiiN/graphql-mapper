@@ -1,5 +1,49 @@
 var prompt = require("prompt-sync")();
-var distance = require('jaro-winkler');
+var distance = require("jaro-winkler");
+
+function identifyOperation(rawInput, threshold) {
+  var tokens = rawInput.split(" ");
+  tokens = cleanTokens(tokens);
+  var ratings = [];
+
+  var operationNamesAverage = ['average', 'mean', 'typical'];
+  var operationNamesMax = ['max', 'maximum', 'highest', 'biggest'];
+  var operationNamesMin = ['min', 'minimum', 'lowest', 'smallest'];
+
+  var currentRatings = [];
+  var currentDist = [];
+  var identifiedOp = "";
+
+  tokens.forEach( (token) => {
+
+    operationNamesAverage.forEach( (opToken) => {
+      currentDist = distance(token, opToken);
+      if (currentDist >= threshold) {
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        identifiedOperation = 'avg';
+      }
+    });
+
+    operationNamesMin.forEach( (opToken) => {
+      currentDist = distance(token, opToken);
+      if (currentDist >= threshold) {
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        identifiedOperation = 'min';
+      }
+    });
+
+    operationNamesMax.forEach( (opToken) => {
+      currentDist = distance(token, opToken);
+      if (currentDist >= threshold) {
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        identifiedOperation = 'max';
+      }
+    });
+
+  });
+
+  return identifiedOperation;  // no special operation type found in the query
+}
 
 function identifyType(rawInput, typeNames, threshold) {
   var tokens = rawInput.split(" ");
@@ -86,4 +130,4 @@ function cleanTokens(tokens) {
   return new_tokens;
 }
 
-module.exports = { identifyType, identifyFields };
+module.exports = { identifyOperation, identifyType, identifyFields };
