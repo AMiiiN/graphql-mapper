@@ -17,7 +17,6 @@ function buildApolloSchemaFromPath(path) {
 function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
   var query = "";
   var specialOperationRequired = ((operationTypeName != null) && (fieldNames.length == 1));
-  console.log(specialOperationRequired + ", " + operationTypeName + ", " + fieldNames.length);
 
   // Build minimized query
   if (minimize) {

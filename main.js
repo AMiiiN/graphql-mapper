@@ -24,12 +24,13 @@ fieldLevelNames = [['Name', 'Age', 'Email'],
 // SAMPLES
 
 // Find special (aggregated) operation types
+console.log("-------------------------------------------------");
 var operationTypeName = identifyOperation(rawInput, 0.9);
 
 // Find the one with the highest similarity to the user input
 var idTypeName = identifyType(rawInput, typeLevelNames, similarityThreshold);
 if (idTypeName == null) {
-  console.log("Error: No fitting database found.");
+  console.log("\nError: No fitting database found.");
   return;
 }
 
@@ -40,16 +41,17 @@ fieldLevelNames = fieldLevelNames[idTypeIndex];
 // Identify the requested fields
 var idFieldNames = identifyFields(rawInput, fieldLevelNames, similarityThreshold);
 if (idFieldNames.length == 0) {
-  console.log("Error: No fitting fields found.");
+  console.log("\nError: No fitting fields found.");
   return;
 }
 
 // Notify about the identified types and fields
-console.log("Looking up the fields " + idFieldNames + " in \"" + idTypeName + "\".");
+console.log("\n--> Looking up the fields " + idFieldNames + " in \"" + idTypeName + "\".");
 
 // Build the corresponding GraphQL query
 var generatedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, false);
 var minimizedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, true);
+console.log("-------------------------------------------------");
 console.log("Generated query: \n" + generatedQuery);
 
 /*
@@ -63,20 +65,22 @@ client
 
 // Generate cURL
 var generatedCurl = buildCurl(minimizedQuery);
-console.log("Generated curl: \n" + generatedCurl);
+//console.log("Generated curl: \n" + generatedCurl);
 
 const child_process = require('child_process');
 
 function runCmd(cmd)
 {
-    var resp = child_process.execSync(cmd);
+    var resp = child_process.execSync(cmd, {stdio: 'pipe'});
     var result = resp.toString('UTF8');
     return result;
 }
 
 var result = runCmd(generatedCurl);
-console.log("Result: ");
+console.log("-------------------------------------------------");
+console.log("Result received from GraphQL server: \n");
 console.log(result);
+console.log("-------------------------------------------------");
 
 /*
 // Run cURL

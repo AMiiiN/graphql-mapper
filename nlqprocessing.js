@@ -6,7 +6,7 @@ function identifyOperation(rawInput, threshold) {
   tokens = cleanTokens(tokens);
   var ratings = [];
 
-  var operationNamesAverage = ['average', 'mean', 'typical'];
+  var operationNamesAverage = ['average', 'mean', 'typical', 'avg'];
   var operationNamesMax = ['max', 'maximum', 'highest', 'biggest'];
   var operationNamesMin = ['min', 'minimum', 'lowest', 'smallest'];
 
@@ -19,7 +19,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesAverage.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
         identifiedOperation = 'avg';
       }
     });
@@ -27,7 +27,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMin.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
         identifiedOperation = 'min';
       }
     });
@@ -35,7 +35,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMax.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", dist: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
         identifiedOperation = 'max';
       }
     });
