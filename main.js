@@ -17,10 +17,11 @@ var typeLevelNames = [];
 var fieldLevelNames = [];
 
 // SAMPLES
-typeLevelNames = ['pilots', 'aircrafts', 'airports'];
-fieldLevelNames = [['Name', 'Age', 'Email'],
-['Model', 'Brand', 'Description'],
-['Name', 'City', 'Country', 'Passengers_per_year']];
+typeLevelNames = ['pilots', 'aircrafts', 'airports', 'matches'];
+fieldLevelNames = [['ID', 'Name', 'Age', 'Email'],
+['ID', 'Model', 'Description', 'Max_Gross_Weight', 'Total_disk_area', 'Max_disk_Loading'],
+['ID', 'Name', 'Total_Passengers', 'Change_2007', 'International_Passengers', 'Domestic_Passengers', 'Transit_Passengers', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
+['ID', 'Round', 'Location', 'Country', 'Date', 'Fastest_Qualifying', 'Winning_Pilot', 'Winning_Aircraft']];
 // SAMPLES
 
 // Find special (aggregated) operation types
@@ -52,7 +53,7 @@ console.log("\n--> Looking up the fields " + idFieldNames + " in \"" + idTypeNam
 var generatedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, false);
 var minimizedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, true);
 console.log("-------------------------------------------------");
-console.log("Generated query: \n" + generatedQuery);
+console.log("Generated query: \n\n" + generatedQuery);
 
 /*
 // Run the query in the client

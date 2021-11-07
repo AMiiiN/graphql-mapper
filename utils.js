@@ -23,11 +23,11 @@ function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
 
     // check if a special operation is queried
     if (specialOperationRequired) {
-      query = 'query MyQuery1 { ' + operationTypeName + '(type: \\"' + typeName + '\\", field: \\"' + fieldNames[0] + '\\") }';
+      query = 'query MyQuery { ' + operationTypeName + '(type: \\"' + typeName + '\\", field: \\"' + fieldNames[0] + '\\") }';
 
     }
     else {
-      query = "query MyQuery2 { " + typeName + " { ";
+      query = "query MyQuery { " + typeName + " { ";
       fieldNames.forEach( (fieldName) => {
         query += fieldName;
         if (fieldNames[fieldNames.length-1] != fieldName) {
@@ -44,11 +44,11 @@ function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
 
     // check if a special operation is queried
     if (specialOperationRequired) {
-      query = "query MyQuery3 {\n\t" + operationTypeName + '(type: \"' + typeName + "\", field: \"" + fieldNames[0] + "\")";
+      query = "query MyQuery {\n\t" + operationTypeName + '(type: \"' + typeName + "\", field: \"" + fieldNames[0] + "\")";
       query += "\n}";
     }
     else {
-      var query = "query MyQuery4 {\n";
+      var query = "query MyQuery {\n";
       query += "\t " + typeName + " {";
       fieldNames.forEach( (fieldName) => {
         query += "\n\t\t" + fieldName;

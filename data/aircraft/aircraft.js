@@ -11,7 +11,7 @@ const schema = gql(`
   }
   type Aircraft implements BaseType {
           ID: ID!
-          Name: String!
+          Model: String!
           Description: String!
           Max_Gross_Weight: String!
           Total_disk_area: String!
@@ -29,7 +29,7 @@ const schema = gql(`
   }
   type Airport implements BaseType {
           ID: ID!
-          Airport_Name: String
+          Name: String
           Total_Passengers: Int
           Change_2007: String
           International_Passengers: Int
@@ -121,7 +121,7 @@ const pilots = [
 const aircrafts = [
   {
     ID: 1,
-    Name: 'Robinson R-22',
+    Model: 'Robinson R-22',
     Description: 'Light utility helicopter',
     Max_Gross_Weight: '1,370 lb (635 kg)',
     Total_disk_area: '497 ft² (46.2 m²)',
@@ -129,7 +129,7 @@ const aircrafts = [
   },
   {
     ID: 2,
-    Name: 'Bell 206B3 JetRanger',
+    Model: 'Bell 206B3 JetRanger',
     Description: 'Turboshaft utility helicopter',
     Max_Gross_Weight: '3,200 lb (1,451 kg)',
     Total_disk_area: '872 ft² (81.1 m²)',
@@ -137,7 +137,7 @@ const aircrafts = [
   },
   {
     ID: 3,
-    Name: 'CH-47D Chinook',
+    Model: 'CH-47D Chinook',
     Description: 'Tandem rotor helicopter',
     Max_Gross_Weight: '50,000 lb (22,680 kg)',
     Total_disk_area: '5,655 ft² (526 m²)',
@@ -145,7 +145,7 @@ const aircrafts = [
   },
   {
     ID: 4,
-    Name: 'Mil Mi-26',
+    Model: 'Mil Mi-26',
     Description: 'Heavy-lift helicopter',
     Max_Gross_Weight: '123,500 lb (56,000 kg)',
     Total_disk_area: '8,495 ft² (789 m²)',
@@ -153,7 +153,7 @@ const aircrafts = [
   },
   {
     ID: 5,
-    Name: 'CH-53E Super Stallion',
+    Model: 'CH-53E Super Stallion',
     Description: 'Heavy-lift helicopter',
     Max_Gross_Weight: '73,500 lb (33,300 kg)',
     Total_disk_area: '4,900 ft² (460 m²)',
@@ -163,7 +163,7 @@ const aircrafts = [
 const airports = [
   {
     ID: 1,
-    Airport_Name: 'London Heathrow',
+    Name: 'London Heathrow',
     Total_Passengers: 67054745,
     Change_2007: '1.5%',
     International_Passengers: 61344438,
@@ -174,7 +174,7 @@ const airports = [
   },
   {
     ID: 2,
-    Airport_Name: 'London Gatwick',
+    Name: 'London Gatwick',
     Total_Passengers: 34205887,
     Change_2007: '2.9%',
     International_Passengers: 30431051,
@@ -185,7 +185,7 @@ const airports = [
   },
   {
     ID: 3,
-    Airport_Name: 'London Stansted',
+    Name: 'London Stansted',
     Total_Passengers: 22360364,
     Change_2007: '6.0%',
     International_Passengers: 19996947,
@@ -196,7 +196,7 @@ const airports = [
   },
   {
     ID: 4,
-    Airport_Name: 'Manchester',
+    Name: 'Manchester',
     Total_Passengers: 21219195,
     Change_2007: '4.0%',
     International_Passengers: 18119230,
@@ -207,7 +207,7 @@ const airports = [
   },
   {
     ID: 5,
-    Airport_Name: 'London Luton',
+    Name: 'London Luton',
     Total_Passengers: 10180734,
     Change_2007: '2.6%',
     International_Passengers: 8853224,
@@ -218,7 +218,7 @@ const airports = [
   },
   {
     ID: 6,
-    Airport_Name: 'Birmingham Airport',
+    Name: 'Birmingham Airport',
     Total_Passengers: 9627589,
     Change_2007: '4.3%',
     International_Passengers: 8105162,
@@ -229,7 +229,7 @@ const airports = [
   },
   {
     ID: 7,
-    Airport_Name: 'Edinburgh',
+    Name: 'Edinburgh',
     Total_Passengers: 9006702,
     Change_2007: '0.5%',
     International_Passengers: 3711140,
@@ -240,7 +240,7 @@ const airports = [
   },
   {
     ID: 8,
-    Airport_Name: 'Glasgow International',
+    Name: 'Glasgow International',
     Total_Passengers: 8178891,
     Change_2007: '7.0%',
     International_Passengers: 3943139,
@@ -251,7 +251,7 @@ const airports = [
   },
   {
     ID: 9,
-    Airport_Name: 'Bristol',
+    Name: 'Bristol',
     Total_Passengers: 6267114,
     Change_2007: '5.7%',
     International_Passengers: 5057051,
@@ -262,7 +262,7 @@ const airports = [
   },
   {
     ID: 10,
-    Airport_Name: 'East Midlands',
+    Name: 'East Midlands',
     Total_Passengers: 5620673,
     Change_2007: '3.8%',
     International_Passengers: 4870184,
