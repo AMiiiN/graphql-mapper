@@ -13,7 +13,7 @@ const schema = gql(`
           ID: ID!
           Model: String!
           Description: String!
-          Max_Gross_Weight: String!
+          Max_Weight: String!
           Total_disk_area: String!
           Max_disk_Loading: String!
   }
@@ -30,11 +30,11 @@ const schema = gql(`
   type Airport implements BaseType {
           ID: ID!
           Name: String
-          Total_Passengers: Int
+          Total_Ps: Int
           Change_2007: String
-          International_Passengers: Int
-          Domestic_Passengers: Int
-          Transit_Passengers: Int
+          International_Ps: Int
+          Domestic_Ps: Int
+          Transit_Ps: Int
           Aircraft_Movements: Int
           Freight_Metric_Tonnes: Int
   }
@@ -123,7 +123,7 @@ const aircrafts = [
     ID: 1,
     Model: 'Robinson R-22',
     Description: 'Light utility helicopter',
-    Max_Gross_Weight: '1,370 lb (635 kg)',
+    Max_Weight: '1,370 lb (635 kg)',
     Total_disk_area: '497 ft² (46.2 m²)',
     Max_disk_Loading: '2.6 lb/ft² (14 kg/m²)'
   },
@@ -131,7 +131,7 @@ const aircrafts = [
     ID: 2,
     Model: 'Bell 206B3 JetRanger',
     Description: 'Turboshaft utility helicopter',
-    Max_Gross_Weight: '3,200 lb (1,451 kg)',
+    Max_Weight: '3,200 lb (1,451 kg)',
     Total_disk_area: '872 ft² (81.1 m²)',
     Max_disk_Loading: '3.7 lb/ft² (18 kg/m²)'
   },
@@ -139,7 +139,7 @@ const aircrafts = [
     ID: 3,
     Model: 'CH-47D Chinook',
     Description: 'Tandem rotor helicopter',
-    Max_Gross_Weight: '50,000 lb (22,680 kg)',
+    Max_Weight: '50,000 lb (22,680 kg)',
     Total_disk_area: '5,655 ft² (526 m²)',
     Max_disk_Loading: '8.8 lb/ft² (43 kg/m²)'
   },
@@ -147,7 +147,7 @@ const aircrafts = [
     ID: 4,
     Model: 'Mil Mi-26',
     Description: 'Heavy-lift helicopter',
-    Max_Gross_Weight: '123,500 lb (56,000 kg)',
+    Max_Weight: '123,500 lb (56,000 kg)',
     Total_disk_area: '8,495 ft² (789 m²)',
     Max_disk_Loading: '14.5 lb/ft² (71 kg/m²)'
   },
@@ -155,7 +155,7 @@ const aircrafts = [
     ID: 5,
     Model: 'CH-53E Super Stallion',
     Description: 'Heavy-lift helicopter',
-    Max_Gross_Weight: '73,500 lb (33,300 kg)',
+    Max_Weight: '73,500 lb (33,300 kg)',
     Total_disk_area: '4,900 ft² (460 m²)',
     Max_disk_Loading: '15 lb/ft² (72 kg/m²)'
   }
@@ -164,110 +164,110 @@ const airports = [
   {
     ID: 1,
     Name: 'London Heathrow',
-    Total_Passengers: 67054745,
+    Total_Ps: 67054745,
     Change_2007: '1.5%',
-    International_Passengers: 61344438,
-    Domestic_Passengers: 5562516,
-    Transit_Passengers: 147791,
+    International_Ps: 61344438,
+    Domestic_Ps: 5562516,
+    Transit_Ps: 147791,
     Aircraft_Movements: 478693,
     Freight_Metric_Tonnes: 1397054
   },
   {
     ID: 2,
     Name: 'London Gatwick',
-    Total_Passengers: 34205887,
+    Total_Ps: 34205887,
     Change_2007: '2.9%',
-    International_Passengers: 30431051,
-    Domestic_Passengers: 3730963,
-    Transit_Passengers: 43873,
+    International_Ps: 30431051,
+    Domestic_Ps: 3730963,
+    Transit_Ps: 43873,
     Aircraft_Movements: 263653,
     Freight_Metric_Tonnes: 107702
   },
   {
     ID: 3,
     Name: 'London Stansted',
-    Total_Passengers: 22360364,
+    Total_Ps: 22360364,
     Change_2007: '6.0%',
-    International_Passengers: 19996947,
-    Domestic_Passengers: 2343428,
-    Transit_Passengers: 19989,
+    International_Ps: 19996947,
+    Domestic_Ps: 2343428,
+    Transit_Ps: 19989,
     Aircraft_Movements: 193282,
     Freight_Metric_Tonnes: 197738
   },
   {
     ID: 4,
     Name: 'Manchester',
-    Total_Passengers: 21219195,
+    Total_Ps: 21219195,
     Change_2007: '4.0%',
-    International_Passengers: 18119230,
-    Domestic_Passengers: 2943719,
-    Transit_Passengers: 156246,
+    International_Ps: 18119230,
+    Domestic_Ps: 2943719,
+    Transit_Ps: 156246,
     Aircraft_Movements: 204610,
     Freight_Metric_Tonnes: 141781
   },
   {
     ID: 5,
     Name: 'London Luton',
-    Total_Passengers: 10180734,
+    Total_Ps: 10180734,
     Change_2007: '2.6%',
-    International_Passengers: 8853224,
-    Domestic_Passengers: 1320678,
-    Transit_Passengers: 6832,
+    International_Ps: 8853224,
+    Domestic_Ps: 1320678,
+    Transit_Ps: 6832,
     Aircraft_Movements: 117859,
     Freight_Metric_Tonnes: 40518
   },
   {
     ID: 6,
     Name: 'Birmingham Airport',
-    Total_Passengers: 9627589,
+    Total_Ps: 9627589,
     Change_2007: '4.3%',
-    International_Passengers: 8105162,
-    Domestic_Passengers: 1471538,
-    Transit_Passengers: 50889,
+    International_Ps: 8105162,
+    Domestic_Ps: 1471538,
+    Transit_Ps: 50889,
     Aircraft_Movements: 112227,
     Freight_Metric_Tonnes: 12192
   },
   {
     ID: 7,
     Name: 'Edinburgh',
-    Total_Passengers: 9006702,
+    Total_Ps: 9006702,
     Change_2007: '0.5%',
-    International_Passengers: 3711140,
-    Domestic_Passengers: 5281038,
-    Transit_Passengers: 14524,
+    International_Ps: 3711140,
+    Domestic_Ps: 5281038,
+    Transit_Ps: 14524,
     Aircraft_Movements: 125550,
     Freight_Metric_Tonnes: 12418
   },
   {
     ID: 8,
     Name: 'Glasgow International',
-    Total_Passengers: 8178891,
+    Total_Ps: 8178891,
     Change_2007: '7.0%',
-    International_Passengers: 3943139,
-    Domestic_Passengers: 4192121,
-    Transit_Passengers: 43631,
+    International_Ps: 3943139,
+    Domestic_Ps: 4192121,
+    Transit_Ps: 43631,
     Aircraft_Movements: 100087,
     Freight_Metric_Tonnes: 3546
   },
   {
     ID: 9,
     Name: 'Bristol',
-    Total_Passengers: 6267114,
+    Total_Ps: 6267114,
     Change_2007: '5.7%',
-    International_Passengers: 5057051,
-    Domestic_Passengers: 1171605,
-    Transit_Passengers: 38458,
+    International_Ps: 5057051,
+    Domestic_Ps: 1171605,
+    Transit_Ps: 38458,
     Aircraft_Movements: 76517,
     Freight_Metric_Tonnes: 3
   },
   {
     ID: 10,
     Name: 'East Midlands',
-    Total_Passengers: 5620673,
+    Total_Ps: 5620673,
     Change_2007: '3.8%',
-    International_Passengers: 4870184,
-    Domestic_Passengers: 746094,
-    Transit_Passengers: 4395,
+    International_Ps: 4870184,
+    Domestic_Ps: 746094,
+    Transit_Ps: 4395,
     Aircraft_Movements: 93038,
     Freight_Metric_Tonnes: 261507
   }
@@ -387,7 +387,7 @@ const resolver = {
       if (obj.Round) {
         return "Match"
       }
-      if (obj.Total_Passengers) {
+      if (obj.Total_Ps) {
         return "Airport"
       }
       if (obj.Airport_ID && obj.Aircraft_ID) {

@@ -19,8 +19,8 @@ var fieldLevelNames = [];
 // SAMPLES
 typeLevelNames = ['pilots', 'aircrafts', 'airports', 'matches'];
 fieldLevelNames = [['ID', 'Name', 'Age', 'Email'],
-['ID', 'Model', 'Description', 'Max_Gross_Weight', 'Total_disk_area', 'Max_disk_Loading'],
-['ID', 'Name', 'Total_Passengers', 'Change_2007', 'International_Passengers', 'Domestic_Passengers', 'Transit_Passengers', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
+['ID', 'Model', 'Description', 'Max_Weight', 'Total_disk_area', 'Max_disk_Loading'],
+['ID', 'Name', 'Total_Ps', 'Change_2007', 'International_Ps', 'Domestic_Ps', 'Transit_Ps', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
 ['ID', 'Round', 'Location', 'Country', 'Date', 'Fastest_Qualifying', 'Winning_Pilot', 'Winning_Aircraft']];
 // SAMPLES
 
