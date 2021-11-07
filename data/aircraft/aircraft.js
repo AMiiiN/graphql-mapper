@@ -1,20 +1,24 @@
 const { gql } = require('apollo-server');
 
 const schema = gql(`
-  type Pilot {
-          Pilot_Id: Int!
+  interface BaseType {
+    ID: ID!
+  }
+  type Pilot implements BaseType {
+          ID: ID!
           Name: String!
           Age: Int!
   }
-  type Aircraft {
-          Aircraft_ID: Int!
-          Aircraft: String!
+  type Aircraft implements BaseType {
+          ID: ID!
+          Name: String!
           Description: String!
           Max_Gross_Weight: String!
           Total_disk_area: String!
           Max_disk_Loading: String!
   }
-  type Match {
+  type Match implements BaseType {
+          ID: ID!
           Round: Int
           Location: String
           Country: String
@@ -23,8 +27,8 @@ const schema = gql(`
           Winning_Pilot: String
           Winning_Aircraft: String
   }
-  type Airport {
-          Airport_ID: Int
+  type Airport implements BaseType {
+          ID: ID!
           Airport_Name: String
           Total_Passengers: Int
           Change_2007: String
@@ -34,125 +38,122 @@ const schema = gql(`
           Aircraft_Movements: Int
           Freight_Metric_Tonnes: Int
   }
-  type AirportAircraft {
-          ID: Int
+  type AirportAircraft implements BaseType {
+          ID: ID!
           Airport_ID: Int
           Aircraft_ID: Int
   }
   type Query {
     pilots: [Pilot]
-    pilotById(id: Int): Pilot
-    pilotsOlderThan(age: Int): [Pilot]
-    avg(type: String, field: String): Float
-    min(type: String, field: String): Float
-    max(type: String, field: String): Float,
-    minInstancePilot(type: String, field: String): [Pilot]
-    maxInstancePilot(type: String, field: String): [Pilot]
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
     aircraftAirportAssigns: [AirportAircraft]
+    avg(type: String, field: String): Float
+    min(type: String, field: String): Float
+    max(type: String, field: String): Float
+    getSpecificInstances(type: String, field: String, op: String, value: String): [BaseType]
   }
 `);
 
 const pilots = [
   {
-    Pilot_Id: 1,
+    ID: 1,
     Name: 'Prof. Zackery Collins',
     Age: 23
   },
   {
-    Pilot_Id: 2,
+    ID: 2,
     Name: 'Katheryn Gorczany IV',
     Age: 20
   },
   {
-    Pilot_Id: 3,
+    ID: 3,
     Name: 'Mr. Cristian Halvorson II',
     Age: 23
   },
   {
-    Pilot_Id: 4,
+    ID: 4,
     Name: 'Ayana Spencer',
     Age: 25
   },
   {
-    Pilot_Id: 5,
+    ID: 5,
     Name: 'Ellen Ledner III',
     Age: 31
   },
   {
-    Pilot_Id: 6,
+    ID: 6,
     Name: 'Elisha Hickle V',
     Age: 37
   },
   {
-    Pilot_Id: 7,
+    ID: 7,
     Name: 'Dr. Jade Bradtke V',
     Age: 26
   },
   {
-    Pilot_Id: 8,
+    ID: 8,
     Name: 'Winnifred Boyle',
     Age: 30
   },
   {
-    Pilot_Id: 9,
+    ID: 9,
     Name: 'Della Lindgren',
     Age: 29
   },
   {
-    Pilot_Id: 10,
+    ID: 10,
     Name: 'Maxwell Graham',
     Age: 26
   },
   {
-    Pilot_Id: 11,
+    ID: 11,
     Name: 'Blaise Muller',
     Age: 33
   },
   {
-    Pilot_Id: 12,
+    ID: 12,
     Name: 'Baylee Steuber',
     Age: 30
   }
 ];
 const aircrafts = [
   {
-    Aircraft_ID: 1,
-    Aircraft: 'Robinson R-22',
+    ID: 1,
+    Name: 'Robinson R-22',
     Description: 'Light utility helicopter',
     Max_Gross_Weight: '1,370 lb (635 kg)',
     Total_disk_area: '497 ft² (46.2 m²)',
     Max_disk_Loading: '2.6 lb/ft² (14 kg/m²)'
   },
   {
-    Aircraft_ID: 2,
-    Aircraft: 'Bell 206B3 JetRanger',
+    ID: 2,
+    Name: 'Bell 206B3 JetRanger',
     Description: 'Turboshaft utility helicopter',
     Max_Gross_Weight: '3,200 lb (1,451 kg)',
     Total_disk_area: '872 ft² (81.1 m²)',
     Max_disk_Loading: '3.7 lb/ft² (18 kg/m²)'
   },
   {
-    Aircraft_ID: 3,
-    Aircraft: 'CH-47D Chinook',
+    ID: 3,
+    Name: 'CH-47D Chinook',
     Description: 'Tandem rotor helicopter',
     Max_Gross_Weight: '50,000 lb (22,680 kg)',
     Total_disk_area: '5,655 ft² (526 m²)',
     Max_disk_Loading: '8.8 lb/ft² (43 kg/m²)'
   },
   {
-    Aircraft_ID: 4,
-    Aircraft: 'Mil Mi-26',
+    ID: 4,
+    Name: 'Mil Mi-26',
     Description: 'Heavy-lift helicopter',
     Max_Gross_Weight: '123,500 lb (56,000 kg)',
     Total_disk_area: '8,495 ft² (789 m²)',
     Max_disk_Loading: '14.5 lb/ft² (71 kg/m²)'
   },
   {
-    Aircraft_ID: 5,
-    Aircraft: 'CH-53E Super Stallion',
+    ID: 5,
+    Name: 'CH-53E Super Stallion',
     Description: 'Heavy-lift helicopter',
     Max_Gross_Weight: '73,500 lb (33,300 kg)',
     Total_disk_area: '4,900 ft² (460 m²)',
@@ -161,7 +162,7 @@ const aircrafts = [
 ];
 const airports = [
   {
-    Airport_ID: 1,
+    ID: 1,
     Airport_Name: 'London Heathrow',
     Total_Passengers: 67054745,
     Change_2007: '1.5%',
@@ -172,7 +173,7 @@ const airports = [
     Freight_Metric_Tonnes: 1397054
   },
   {
-    Airport_ID: 2,
+    ID: 2,
     Airport_Name: 'London Gatwick',
     Total_Passengers: 34205887,
     Change_2007: '2.9%',
@@ -183,7 +184,7 @@ const airports = [
     Freight_Metric_Tonnes: 107702
   },
   {
-    Airport_ID: 3,
+    ID: 3,
     Airport_Name: 'London Stansted',
     Total_Passengers: 22360364,
     Change_2007: '6.0%',
@@ -194,7 +195,7 @@ const airports = [
     Freight_Metric_Tonnes: 197738
   },
   {
-    Airport_ID: 4,
+    ID: 4,
     Airport_Name: 'Manchester',
     Total_Passengers: 21219195,
     Change_2007: '4.0%',
@@ -205,7 +206,7 @@ const airports = [
     Freight_Metric_Tonnes: 141781
   },
   {
-    Airport_ID: 5,
+    ID: 5,
     Airport_Name: 'London Luton',
     Total_Passengers: 10180734,
     Change_2007: '2.6%',
@@ -216,7 +217,7 @@ const airports = [
     Freight_Metric_Tonnes: 40518
   },
   {
-    Airport_ID: 6,
+    ID: 6,
     Airport_Name: 'Birmingham Airport',
     Total_Passengers: 9627589,
     Change_2007: '4.3%',
@@ -227,7 +228,7 @@ const airports = [
     Freight_Metric_Tonnes: 12192
   },
   {
-    Airport_ID: 7,
+    ID: 7,
     Airport_Name: 'Edinburgh',
     Total_Passengers: 9006702,
     Change_2007: '0.5%',
@@ -238,7 +239,7 @@ const airports = [
     Freight_Metric_Tonnes: 12418
   },
   {
-    Airport_ID: 8,
+    ID: 8,
     Airport_Name: 'Glasgow International',
     Total_Passengers: 8178891,
     Change_2007: '7.0%',
@@ -249,7 +250,7 @@ const airports = [
     Freight_Metric_Tonnes: 3546
   },
   {
-    Airport_ID: 9,
+    ID: 9,
     Airport_Name: 'Bristol',
     Total_Passengers: 6267114,
     Change_2007: '5.7%',
@@ -260,7 +261,7 @@ const airports = [
     Freight_Metric_Tonnes: 3
   },
   {
-    Airport_ID: 10,
+    ID: 10,
     Airport_Name: 'East Midlands',
     Total_Passengers: 5620673,
     Change_2007: '3.8%',
@@ -273,6 +274,7 @@ const airports = [
 ];
 const matches = [
   {
+    ID: 1,
     Round: 1,
     Location: "Mina' Zayid , Abu Dhabi",
     Country: "United Arab Emirates",
@@ -282,6 +284,7 @@ const matches = [
     Winning_Aircraft: 1
   },
   {
+    ID: 2,
     Round: 2,
     Location: "Swan River , Perth",
     Country: "Australia",
@@ -291,6 +294,7 @@ const matches = [
     Winning_Aircraft: 1
   },
   {
+    ID: 3,
     Round: 3,
     Location: "Flamengo Beach , Rio de Janeiro",
     Country: "Brazil",
@@ -300,6 +304,7 @@ const matches = [
     Winning_Aircraft: 2
   },
   {
+    ID: 4,
     Round: 4,
     Location: "Windsor , Ontario",
     Country: "Canada",
@@ -309,6 +314,7 @@ const matches = [
     Winning_Aircraft: 4
   },
   {
+    ID: 5,
     Round: 5,
     Location: "New York City",
     Country: "United States",
@@ -318,6 +324,7 @@ const matches = [
     Winning_Aircraft: 3
   },
   {
+    ID: 6,
     Round: 6,
     Location: "EuroSpeedway Lausitz",
     Country: "Germany",
@@ -327,6 +334,7 @@ const matches = [
     Winning_Aircraft: 4
   },
   {
+    ID: 7,
     Round: 7,
     Location: "River Danube , Budapest",
     Country: "Hungary",
@@ -368,14 +376,27 @@ const allTypes = {
 };
 
 const resolver = {
+  BaseType: {
+    __resolveType(obj, context, info) {
+      if (obj.Age) {
+        return "Pilot"
+      }
+      if (obj.Description) {
+        return "Aircraft"
+      }
+      if (obj.Round) {
+        return "Match"
+      }
+      if (obj.Total_Passengers) {
+        return "Airport"
+      }
+      if (obj.Airport_ID && obj.Aircraft_ID) {
+        return "AircraftAirportAssigns"
+      }
+    }
+  },
   Query: {
     pilots: () => pilots,
-    pilotById: (obj, args) => {
-      return pilots.filter(pilot => pilot.Pilot_Id == args.id)[0]; // returns exactly one pilot object
-    },
-    pilotsOlderThan: (obj, args) => {
-      return pilots.filter(pilot => pilot.Age >= args.age);
-    },
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
@@ -391,13 +412,27 @@ const resolver = {
     min: (obj, args) => {
       return getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
     },
-    maxInstancePilot: (obj, args) => {
-      var currentMax = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-      return allTypes[args.type].filter(instance => instance[args.field] >= currentMax);
-    },
-    minInstancePilot: (obj, args) => {
-      var currentMin = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-      return allTypes[args.type].filter(instance => instance[args.field] <= currentMin);
+    getSpecificInstances: (obj, args) => {
+      var referenceValue;
+      var targetInstances;
+      if (args.op == "min") {
+        referenceValue = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
+      }
+      if (args.op == "max") {
+        referenceValue = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
+      }
+      if (args.op == "=") {
+        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == args.value);
+      }
+      if (args.op == "<") {
+        targetInstances = allTypes[args.type].filter(instance => instance[args.field] < args.value);
+      }
+      if (args.op == ">") {
+        targetInstances = allTypes[args.type].filter(instanve => instance[args.field] > args.value);
+      }
+      return targetInstances;
     }
   }
 };
