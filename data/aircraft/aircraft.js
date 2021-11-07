@@ -52,6 +52,8 @@ const schema = gql(`
     avg(type: String, field: String): Float
     min(type: String, field: String): Float
     max(type: String, field: String): Float
+    sum(type: String, field: String): Float
+    count(type: String): Int
     getSpecificInstances(type: String, field: String, op: String, value: String): [BaseType]
   }
 `);
@@ -412,6 +414,12 @@ const resolver = {
     min: (obj, args) => {
       return getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
     },
+    sum: (obj, args) => {
+      return getSum(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+    },
+    count: (obj, args) => {
+      return formFieldArrayFromAllInstances(allTypes[args.type], args.field).length;
+    },
     getSpecificInstances: (obj, args) => {
       var referenceValue;
       var targetInstances;
@@ -488,4 +496,11 @@ function getMin(arr) {
     }
   }
   return min;
+}
+function getSum(arr) {
+  var sum = 0.0;
+  for (var i=0; i<arr.length; i++) {
+    sum += arr[i];
+  }
+  return sum;
 }
