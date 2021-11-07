@@ -16,25 +16,27 @@ function buildApolloSchemaFromPath(path) {
 
 function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
   var query = "";
-  var specialOperationRequired = ((operationTypeName != null) && (fieldNames.length == 1));
+  var specialOperationRequired = ((operationTypeName != "") && (fieldNames.length == 1));
 
   // Build minimized query
   if (minimize) {
 
     // check if a special operation is queried
     if (specialOperationRequired) {
-      query = 'query MyQuery { ' + operationTypeName + '(type: \\"' + typeName + '\\", field: \\"' + fieldNames[0] + '\\") }';
-      return query;
+      query = 'query MyQuery1 { ' + operationTypeName + '(type: \\"' + typeName + '\\", field: \\"' + fieldNames[0] + '\\") }';
+
+    }
+    else {
+      query = "query MyQuery2 { " + typeName + " { ";
+      fieldNames.forEach( (fieldName) => {
+        query += fieldName;
+        if (fieldNames[fieldNames.length-1] != fieldName) {
+          query += ", ";
+        }
+      });
+      query += " } }";
     }
 
-    query = "query MyQuery { " + typeName + " { ";
-    fieldNames.forEach( (fieldName) => {
-      query += fieldName;
-      if (fieldNames[fieldNames.length-1] != fieldName) {
-        query += ", ";
-      }
-    });
-    query += " } }";
   }
 
   // Build full query
@@ -42,17 +44,17 @@ function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
 
     // check if a special operation is queried
     if (specialOperationRequired) {
-      query = "query MyQuery {\n\t" + operationTypeName + '(type: \"' + typeName + "\", field: \"" + fieldNames[0] + "\")";
+      query = "query MyQuery3 {\n\t" + operationTypeName + '(type: \"' + typeName + "\", field: \"" + fieldNames[0] + "\")";
       query += "\n}";
-      return query;
     }
-
-    var query = "query MyQuery {\n";
-    query += "\t " + typeName + " {";
-    fieldNames.forEach( (fieldName) => {
-      query += "\n\t\t" + fieldName;
-    });
-    query += "\n\t}\n}";
+    else {
+      var query = "query MyQuery4 {\n";
+      query += "\t " + typeName + " {";
+      fieldNames.forEach( (fieldName) => {
+        query += "\n\t\t" + fieldName;
+      });
+      query += "\n\t}\n}";
+    }
   }
   return query;
 }

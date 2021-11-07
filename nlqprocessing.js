@@ -7,12 +7,12 @@ function identifyOperation(rawInput, threshold) {
   var ratings = [];
 
   var operationNamesAverage = ['average', 'mean', 'typical', 'avg'];
-  var operationNamesMax = ['max', 'maximum', 'highest', 'biggest'];
-  var operationNamesMin = ['min', 'minimum', 'lowest', 'smallest'];
+  var operationNamesMax = ['max', 'maximum', 'maximal', 'highest', 'biggest'];
+  var operationNamesMin = ['min', 'minimum', 'minimal', 'lowest', 'smallest'];
 
   var currentRatings = [];
   var currentDist = [];
-  var identifiedOp = "";
+  var identifiedOperation = "";
 
   tokens.forEach( (token) => {
 
