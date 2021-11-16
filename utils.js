@@ -1,8 +1,8 @@
-const fs = require('fs');
-var { graphql, buildSchema } = require('graphql');
+//const fs = require('fs');
+//var { graphql, buildSchema } = require('graphql');
 const { gql } = require('apollo-server');
 
-function buildSchemaFromPath(path) {
+/*function buildSchemaFromPath(path) {
   var input_data = fs.readFileSync(path).toString();
   var schema = buildSchema(input_data);
   return schema;
@@ -12,7 +12,7 @@ function buildApolloSchemaFromPath(path) {
   var input = fs.readFileSync(path).toString();
   var schema = gql(input);
   return schema;
-}
+}*/
 
 function buildQuery(operationTypeName, typeName, fieldNames, minimize) {
   var query = "";
@@ -68,5 +68,6 @@ function buildCurl(query) {
   return curl;
 }
 
-module.exports = { buildSchemaFromPath, buildApolloSchemaFromPath,
-  buildQuery, buildCurl };
+/*module.exports = { buildSchemaFromPath, buildApolloSchemaFromPath,
+  buildQuery, buildCurl };*/
+module.exports = { buildQuery, buildCurl };
