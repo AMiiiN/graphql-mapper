@@ -1,6 +1,0 @@
-{
-  {
-    "query": "SELECT salary FROM instructor",
-    "result": "{ instructor { salary } }"
-  }
-}
