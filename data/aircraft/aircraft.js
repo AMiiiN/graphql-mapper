@@ -11,11 +11,12 @@ const schema = gql(`
   }
   type Aircraft implements BaseType {
           ID: ID!
-          Model: String!
+          Name_Model: String!
           Description: String!
           Max_Weight: String!
           Total_disk_area: String!
           Max_disk_Loading: String!
+          Assigned_Airport: Airport
   }
   type Match implements BaseType {
           ID: ID!
@@ -24,8 +25,8 @@ const schema = gql(`
           Country: String
           Date: String
           Fastest_Qualifying: String
-          Winning_Pilot: String
-          Winning_Aircraft: String
+          Winning_Pilot: Pilot
+          Winning_Aircraft: Aircraft
   }
   type Airport implements BaseType {
           ID: ID!
@@ -38,17 +39,11 @@ const schema = gql(`
           Aircraft_Movements: Int
           Freight_Metric_Tonnes: Int
   }
-  type AirportAircraft implements BaseType {
-          ID: ID!
-          Airport_ID: Int
-          Aircraft_ID: Int
-  }
   type Query {
     pilots: [Pilot]
     aircrafts: [Aircraft]
     airports: [Airport]
     matches: [Match]
-    aircraftAirportAssigns: [AirportAircraft]
     avg(type: String, field: String): Float
     min(type: String, field: String): Float
     max(type: String, field: String): Float
@@ -120,48 +115,6 @@ const pilots = [
     Age: 30
   }
 ];
-const aircrafts = [
-  {
-    ID: 1,
-    Model: 'Robinson R-22',
-    Description: 'Light utility helicopter',
-    Max_Weight: '1,370 lb (635 kg)',
-    Total_disk_area: '497 ft² (46.2 m²)',
-    Max_disk_Loading: '2.6 lb/ft² (14 kg/m²)'
-  },
-  {
-    ID: 2,
-    Model: 'Bell 206B3 JetRanger',
-    Description: 'Turboshaft utility helicopter',
-    Max_Weight: '3,200 lb (1,451 kg)',
-    Total_disk_area: '872 ft² (81.1 m²)',
-    Max_disk_Loading: '3.7 lb/ft² (18 kg/m²)'
-  },
-  {
-    ID: 3,
-    Model: 'CH-47D Chinook',
-    Description: 'Tandem rotor helicopter',
-    Max_Weight: '50,000 lb (22,680 kg)',
-    Total_disk_area: '5,655 ft² (526 m²)',
-    Max_disk_Loading: '8.8 lb/ft² (43 kg/m²)'
-  },
-  {
-    ID: 4,
-    Model: 'Mil Mi-26',
-    Description: 'Heavy-lift helicopter',
-    Max_Weight: '123,500 lb (56,000 kg)',
-    Total_disk_area: '8,495 ft² (789 m²)',
-    Max_disk_Loading: '14.5 lb/ft² (71 kg/m²)'
-  },
-  {
-    ID: 5,
-    Model: 'CH-53E Super Stallion',
-    Description: 'Heavy-lift helicopter',
-    Max_Weight: '73,500 lb (33,300 kg)',
-    Total_disk_area: '4,900 ft² (460 m²)',
-    Max_disk_Loading: '15 lb/ft² (72 kg/m²)'
-  }
-];
 const airports = [
   {
     ID: 1,
@@ -172,7 +125,8 @@ const airports = [
     Domestic_Ps: 5562516,
     Transit_Ps: 147791,
     Aircraft_Movements: 478693,
-    Freight_Metric_Tonnes: 1397054
+    Freight_Metric_Tonnes: 1397054,
+    //Assigned_Aircraft: aircrafts.filter(obj => obj.ID == 2)[0]
   },
   {
     ID: 2,
@@ -183,7 +137,8 @@ const airports = [
     Domestic_Ps: 3730963,
     Transit_Ps: 43873,
     Aircraft_Movements: 263653,
-    Freight_Metric_Tonnes: 107702
+    Freight_Metric_Tonnes: 107702,
+    //Assigned_Aircraft: aircrafts.filter(obj => obj.ID == 1)[0]
   },
   {
     ID: 3,
@@ -227,7 +182,8 @@ const airports = [
     Domestic_Ps: 1471538,
     Transit_Ps: 50889,
     Aircraft_Movements: 112227,
-    Freight_Metric_Tonnes: 12192
+    Freight_Metric_Tonnes: 12192,
+    //Assigned_Aircraft: aircrafts.filter(obj => obj.ID == 5)[0]
   },
   {
     ID: 7,
@@ -260,7 +216,8 @@ const airports = [
     Domestic_Ps: 1171605,
     Transit_Ps: 38458,
     Aircraft_Movements: 76517,
-    Freight_Metric_Tonnes: 3
+    Freight_Metric_Tonnes: 3,
+    //Assigned_Aircraft: aircrafts.filter(obj => obj.ID == 3)[0]
   },
   {
     ID: 10,
@@ -274,6 +231,52 @@ const airports = [
     Freight_Metric_Tonnes: 261507
   }
 ];
+const aircrafts = [
+  {
+    ID: 1,
+    Name_Model: 'Robinson R-22',
+    Description: 'Light utility helicopter',
+    Max_Weight: '1,370 lb (635 kg)',
+    Total_disk_area: '497 ft² (46.2 m²)',
+    Max_disk_Loading: '2.6 lb/ft² (14 kg/m²)',
+    Assigned_Airport: airports.filter(obj => obj.ID == 2)[0]
+  },
+  {
+    ID: 2,
+    Name_Model: 'Bell 206B3 JetRanger',
+    Description: 'Turboshaft utility helicopter',
+    Max_Weight: '3,200 lb (1,451 kg)',
+    Total_disk_area: '872 ft² (81.1 m²)',
+    Max_disk_Loading: '3.7 lb/ft² (18 kg/m²)',
+    Assigned_Airport: airports.filter(obj => obj.ID == 1)[0]
+  },
+  {
+    ID: 3,
+    Name_Model: 'CH-47D Chinook',
+    Description: 'Tandem rotor helicopter',
+    Max_Weight: '50,000 lb (22,680 kg)',
+    Total_disk_area: '5,655 ft² (526 m²)',
+    Max_disk_Loading: '8.8 lb/ft² (43 kg/m²)',
+    Assigned_Airport: airports.filter(obj => obj.ID == 9)[0]
+  },
+  {
+    ID: 4,
+    Name_Model: 'Mil Mi-26',
+    Description: 'Heavy-lift helicopter',
+    Max_Weight: '123,500 lb (56,000 kg)',
+    Total_disk_area: '8,495 ft² (789 m²)',
+    Max_disk_Loading: '14.5 lb/ft² (71 kg/m²)'
+  },
+  {
+    ID: 5,
+    Name_Model: 'CH-53E Super Stallion',
+    Description: 'Heavy-lift helicopter',
+    Max_Weight: '73,500 lb (33,300 kg)',
+    Total_disk_area: '4,900 ft² (460 m²)',
+    Max_disk_Loading: '15 lb/ft² (72 kg/m²)',
+    Assigned_Airport: airports.filter(obj => obj.ID == 6)[0]
+  }
+];
 const matches = [
   {
     ID: 1,
@@ -282,8 +285,8 @@ const matches = [
     Country: "United Arab Emirates",
     Date: "March 26–27",
     Fastest_Qualifying: "Hannes Arch",
-    Winning_Pilot: 1,
-    Winning_Aircraft: 1
+    Winning_Pilot: pilots.filter(obj => obj.ID == 1)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 1)[0]
   },
   {
     ID: 2,
@@ -292,8 +295,8 @@ const matches = [
     Country: "Australia",
     Date: "April 17–18",
     Fastest_Qualifying: "Paul Bonhomme",
-    Winning_Pilot: 4,
-    Winning_Aircraft: 1
+    Winning_Pilot: pilots.filter(obj => obj.ID == 4)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 1)[0]
   },
   {
     ID: 3,
@@ -302,8 +305,8 @@ const matches = [
     Country: "Brazil",
     Date: "May 8–9",
     Fastest_Qualifying: "Hannes Arch",
-    Winning_Pilot: 6,
-    Winning_Aircraft: 2
+    Winning_Pilot: pilots.filter(obj => obj.ID == 6)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 2)[0]
   },
   {
     ID: 4,
@@ -312,8 +315,8 @@ const matches = [
     Country: "Canada",
     Date: "June 5–6",
     Fastest_Qualifying: "Nigel Lamb",
-    Winning_Pilot: 4,
-    Winning_Aircraft: 4
+    Winning_Pilot: pilots.filter(obj => obj.ID == 4)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 4)[0]
   },
   {
     ID: 5,
@@ -322,8 +325,8 @@ const matches = [
     Country: "United States",
     Date: "June 19–20",
     Fastest_Qualifying: "Hannes Arch",
-    Winning_Pilot: 9,
-    Winning_Aircraft: 3
+    Winning_Pilot: pilots.filter(obj => obj.ID == 9)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 3)[0]
   },
   {
     ID: 6,
@@ -332,8 +335,8 @@ const matches = [
     Country: "Germany",
     Date: "August 7–8",
     Fastest_Qualifying: "Paul Bonhomme",
-    Winning_Pilot: 2,
-    Winning_Aircraft: 4
+    Winning_Pilot: pilots.filter(obj => obj.ID == 2)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 4)[0]
   },
   {
     ID: 7,
@@ -342,30 +345,8 @@ const matches = [
     Country: "Hungary",
     Date: "Cancelled",
     Fastest_Qualifying: "Cancelled",
-    Winning_Pilot: 6,
-    Winning_Aircraft: 5
-  }
-];
-const aircraftAirportAssigns = [
-  {
-    ID: 1,
-    Airport_ID: 6,
-    Aircraft_ID: 5
-  },
-  {
-    ID: 2,
-    Airport_ID: 2,
-    Aircraft_ID: 1
-  },
-  {
-    ID: 3,
-    Airport_ID: 1,
-    Aircraft_ID: 2
-  },
-  {
-    ID: 4,
-    Airport_ID: 9,
-    Aircraft_ID: 3
+    Winning_Pilot: pilots.filter(obj => obj.ID == 6)[0],
+    Winning_Aircraft: aircrafts.filter(obj => obj.ID == 5)[0]
   }
 ];
 
@@ -373,8 +354,7 @@ const allTypes = {
   "pilots": pilots,
   "aircrafts": aircrafts,
   "airports": airports,
-  "matches": matches,
-  "aircraftAirportAssigns": aircraftAirportAssigns
+  "matches": matches
 };
 
 const resolver = {
@@ -392,9 +372,6 @@ const resolver = {
       if (obj.Total_Ps) {
         return "Airport"
       }
-      if (obj.Airport_ID && obj.Aircraft_ID) {
-        return "AircraftAirportAssigns"
-      }
     }
   },
   Query: {
@@ -402,7 +379,6 @@ const resolver = {
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
-    aircraftAirportAssigns: () => aircraftAirportAssigns,
 
     // Aggregations
     avg: (obj, args) => {

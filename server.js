@@ -1,35 +1,17 @@
-var { graphql, buildSchema } = require('graphql');
 const fs = require('fs');
 var utils = require("./utils");
-var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+const { graphql, buildSchema } = require('graphql');
+const { ApolloServer, gql } = require('apollo-server');
 
-// Path to the GraphQL data file
-const src_path = "data/sample.gql";
+// Import GraphQL data
+const data = require('./data/aircraft/aircraft');
+const typeDefs = data.schema;
+const resolvers = data.resolver;
 
-// Create GraphQL schema from file
-var schema = utils.buildSchemaFromPath(src_path);
+// Create ApolloServer instance
+const server = new ApolloServer({ typeDefs, resolvers });
 
-var root = {
-  hello: () => 'Hello world!',
-  name: () => 'Amin Harig',
-  age: () => 24
-};
-
-// // Execute GraphQL query
-// graphql(schema, '{ hello, name, age }', root).then((response) => {
-//   console.log(response);
-//   console.log("---");
-//   console.log("Name: " + response.data.name);
-//   console.log("Age: " + response.data.age)
-// });
-
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+// Launch ApolloServer
+server.listen().then(({ url }) => {
+  console.log(`Server ready at ${url}`);
+});

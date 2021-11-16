@@ -7,7 +7,7 @@ function identifyOperation(rawInput, threshold) {
   var ratings = [];
 
   var operationNamesAverage = ['average', 'mean', 'typical', 'avg'];
-  var operationNamesMax = ['max', 'maximum', 'maximal', 'highest', 'biggest'];
+  var operationNamesMax = ['max', 'maximum', 'maximal', 'highest', 'biggest', 'largest', 'most'];
   var operationNamesMin = ['min', 'minimum', 'minimal', 'lowest', 'smallest'];
   var operationNamesSum = ['sum'];
   var operationNamesCount = ['count'];
@@ -21,7 +21,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesAverage.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'avg';
       }
     });
@@ -29,7 +29,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMin.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'min';
       }
     });
@@ -37,7 +37,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMax.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'max';
       }
     });
@@ -45,7 +45,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesSum.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'sum';
       }
     });
@@ -53,7 +53,7 @@ function identifyOperation(rawInput, threshold) {
     operationNamesCount.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", distance: " + currentDist + ")");
+        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'count';
       }
     });
@@ -73,12 +73,12 @@ function identifyType(rawInput, typeNames, threshold) {
       ratings.push({
         name: typeName,
         token: token,
-        distance: distance(token, typeName.toLowerCase())
+        similarity: distance(token, typeName.toLowerCase())
       });
     });
   });
 
-  ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  ratings = ratings.filter( (ratedObject) => ratedObject.similarity >= threshold);
   console.log("Identified types: ");
   console.log(ratings);
   var idTypeName;
@@ -92,10 +92,10 @@ function identifyType(rawInput, typeNames, threshold) {
     }
     else {
       var highestRatedType = ratings[0];
-      var max = ratings[0].distance;
+      var max = ratings[0].similarity;
       ratings.forEach( (ratedObject) => {
-        if (ratedObject.distance > max) {
-          max = ratedObject.distance;
+        if (ratedObject.similarity > max) {
+          max = ratedObject.similarity;
           highestRatedType = ratedObject;
         }
       });
@@ -116,13 +116,13 @@ function identifyFields(rawInput, fieldNames, threshold) {
       ratings.push({
         name: fieldName,
         token: token,
-        distance: distance(token, fieldName.toLowerCase())
+        similarity: distance(token, fieldName.toLowerCase())
       });
     });
   });
 
   var idFields = [];
-  ratings = ratings.filter( (ratedObject) => ratedObject.distance >= threshold);
+  ratings = ratings.filter( (ratedObject) => ratedObject.similarity >= threshold);
   console.log("Identified fields: ");
   console.log(ratings);
   ratings.forEach( (ratedObject) => {

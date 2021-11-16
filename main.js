@@ -4,7 +4,7 @@ const { identifyOperation, identifyType, identifyFields } = require("./nlqproces
 const { buildQuery, buildCurl } = require("./utils");
 const https = require('https');
 
-const similarityThreshold = 0.8;
+const similarityThreshold = 0.80;
 const operationTypes = ['avg', 'min', 'max'];
 
 // Get the user input
@@ -19,7 +19,7 @@ var fieldLevelNames = [];
 // SAMPLES
 typeLevelNames = ['pilots', 'aircrafts', 'airports', 'matches'];
 fieldLevelNames = [['ID', 'Name', 'Age', 'Email'],
-['ID', 'Model', 'Description', 'Max_Weight', 'Total_disk_area', 'Max_disk_Loading'],
+['ID', 'Name_Model', 'Description', 'Max_Weight', 'Total_disk_area', 'Max_disk_Loading'],
 ['ID', 'Name', 'Total_Ps', 'Change_2007', 'International_Ps', 'Domestic_Ps', 'Transit_Ps', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
 ['ID', 'Round', 'Location', 'Country', 'Date', 'Fastest_Qualifying', 'Winning_Pilot', 'Winning_Aircraft']];
 // SAMPLES
@@ -31,7 +31,7 @@ var operationTypeName = identifyOperation(rawInput, 0.9);
 // Find the one with the highest similarity to the user input
 var idTypeName = identifyType(rawInput, typeLevelNames, similarityThreshold);
 if (idTypeName == null) {
-  console.log("\nError: No fitting database found.");
+  console.log("\nError: No corresponding type found.");
   return;
 }
 
@@ -42,7 +42,7 @@ fieldLevelNames = fieldLevelNames[idTypeIndex];
 // Identify the requested fields
 var idFieldNames = identifyFields(rawInput, fieldLevelNames, similarityThreshold);
 if (idFieldNames.length == 0) {
-  console.log("\nError: No fitting fields found.");
+  console.log("\nError: No corresponding fields found.");
   return;
 }
 
