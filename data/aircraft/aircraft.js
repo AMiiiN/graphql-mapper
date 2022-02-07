@@ -1,4 +1,5 @@
 const { gql } = require('apollo-server');
+const { formFieldArrayFromAllInstances, getAvg, getMax, getMin, getSum } = require('./../../stdresolvers');
 
 const schema = gql(`
   interface BaseType {
@@ -382,7 +383,7 @@ const resolver = {
 
     // Aggregations
     avg: (obj, args) => {
-      return calcAverage(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+      return getAvg(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
     },
     max: (obj, args) => {
       return getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
@@ -438,45 +439,3 @@ const resolverDB = {
 */
 
 module.exports = { schema, resolver };
-
-// Helper functions
-//
-function formFieldArrayFromAllInstances(arr, field_name) {
-  var res = [];
-  for (var i=0; i<arr.length; i++) {
-    res.push(arr[i][field_name]);
-  }
-  return res;
-}
-function calcAverage(arr) {
-  var sum = 0.0;
-  for (var i=0; i<arr.length; i++) {
-    sum += arr[i];
-  }
-  return (sum / arr.length);
-}
-function getMax(arr) {
-  var max = arr[0];
-  for (var i=1; i<arr.length; i++) {
-    if (arr[i] > max) {
-      max = arr[i];
-    }
-  }
-  return max;
-}
-function getMin(arr) {
-  var min = arr[0];
-  for (var i=1; i<arr.length; i++) {
-    if (arr[i] < min) {
-      min = arr[i];
-    }
-  }
-  return min;
-}
-function getSum(arr) {
-  var sum = 0.0;
-  for (var i=0; i<arr.length; i++) {
-    sum += arr[i];
-  }
-  return sum;
-}
