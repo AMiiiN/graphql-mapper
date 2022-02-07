@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server');
-const { formFieldArrayFromAllInstances, getAvg, getMax, getMin, getSum } = require('./../../stdresolvers');
+const { formFieldArrayFromAllInstances, getAvg, getMax, 
+  getMin, getSum, stdResolvers } = require('./../../stdresolvers');
 
 const schema = gql(`
   interface BaseType {
@@ -380,45 +381,8 @@ const resolver = {
     aircrafts: () => aircrafts,
     airports: () => airports,
     matches: () => matches,
-
-    // Aggregations
-    avg: (obj, args) => {
-      return getAvg(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-    },
-    max: (obj, args) => {
-      return getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-    },
-    min: (obj, args) => {
-      return getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-    },
-    sum: (obj, args) => {
-      return getSum(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-    },
-    count: (obj, args) => {
-      return formFieldArrayFromAllInstances(allTypes[args.type], args.field).length;
-    },
-    getSpecificInstances: (obj, args) => {
-      var referenceValue;
-      var targetInstances;
-      if (args.op == "min") {
-        referenceValue = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
-      }
-      if (args.op == "max") {
-        referenceValue = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
-        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
-      }
-      if (args.op == "=") {
-        targetInstances = allTypes[args.type].filter(instance => instance[args.field] == args.value);
-      }
-      if (args.op == "<") {
-        targetInstances = allTypes[args.type].filter(instance => instance[args.field] < args.value);
-      }
-      if (args.op == ">") {
-        targetInstances = allTypes[args.type].filter(instanve => instance[args.field] > args.value);
-      }
-      return targetInstances;
-    }
+    // standard resolvers
+    ...stdResolvers(allTypes),
   }
 };
 
