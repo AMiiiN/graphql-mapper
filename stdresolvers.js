@@ -2,6 +2,7 @@
 //
 function stdResolvers(allTypes) {
     return {
+        // avg(type: "typename", field: "fieldname")
         avg: (obj, args) => {
             return getAvg(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
         },
@@ -18,14 +19,14 @@ function stdResolvers(allTypes) {
             return formFieldArrayFromAllInstances(allTypes[args.type], args.field).length;
         },
         getSpecificInstances: (obj, args) => {
-            var referenceValue;
+            var refValue;
             var targetInstances;
             if (args.op == "min") {
-            referenceValue = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+            refValue = getMin(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
             targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
             }
             if (args.op == "max") {
-            referenceValue = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
+            refValue = getMax(formFieldArrayFromAllInstances(allTypes[args.type], args.field));
             targetInstances = allTypes[args.type].filter(instance => instance[args.field] == referenceValue);
             }
             if (args.op == "=") {
