@@ -25,6 +25,7 @@ const schema = gql(`
         Vice_Name: String
         Representative_Name: String
         Company: Company
+        Rank_of_Year: Int
     }
     type Query {
         companies: [Company]
@@ -49,6 +50,7 @@ const companies = [
         Profits: 41.1,
         Assets: 331.1,
         Market_Value: 407.4,
+        Stations: gas_stations.filter(obj => ((obj.ID == 11) || (obj.ID == 4)))
     },
     {
         ID: 2,
@@ -60,6 +62,7 @@ const companies = [
         Profits: 14.2,
         Assets: 717.2,
         Market_Value: 213.7,
+        Stations: []
     },
     {
         ID: 3,
@@ -71,6 +74,7 @@ const companies = [
         Profits: 30.9,
         Assets: 340.5,
         Market_Value: 227.6,
+        Stations: gas_stations.filter(obj => obj.ID == 1)
     },
     {
         ID: 4,
@@ -82,6 +86,7 @@ const companies = [
         Profits: 25.1,
         Assets: 2039.1,
         Market_Value: 237.4,
+        Stations: []
     },
     {
         ID: 5,
@@ -93,6 +98,7 @@ const companies = [
         Profits: 16.2,
         Assets: 2550,
         Market_Value: 164.3,
+        Stations: []
     },
     {
         ID: 6,
@@ -104,6 +110,7 @@ const companies = [
         Profits: 20.6,
         Assets: 304.7,
         Market_Value: 294.7,
+        Stations: gas_stations.filter(obj => obj.ID == 6)
     },
     {
         ID: 7,
@@ -115,6 +122,7 @@ const companies = [
         Profits: 10.3,
         Assets: 392.6,
         Market_Value: 202.2,
+        Stations: []
     },
     {
         ID: 8,
@@ -126,6 +134,7 @@ const companies = [
         Profits: 15.9,
         Assets: 1313.9,
         Market_Value: 178.7,
+        Stations: []
     },
     {
         ID: 9,
@@ -137,6 +146,7 @@ const companies = [
         Profits: 20.1,
         Assets: 319.4,
         Market_Value: 180.0,
+        Stations: gas_stations.filter(obj => obj.ID == 7)
     },
     {
         ID: 10,
@@ -148,6 +158,7 @@ const companies = [
         Profits: 25.7,
         Assets: 292.5,
         Market_Value: 147.4,
+        Stations: gas_stations.filter(obj => obj.ID == 10)
     }
 ];
 const gas_stations = [
@@ -157,7 +168,9 @@ const gas_stations = [
         Location: "Herne Hill",
         Manager_Name: "Brian Wingrave",
         Vice_Name: "Russell Denman",
-        Representative_Name: "Clive Burr"
+        Representative_Name: "Clive Burr",
+        Company: companies.filter(obj => obj.ID == 3),
+        Rank_of_Year: 2
     },
     {
         ID: 2,
@@ -165,7 +178,9 @@ const gas_stations = [
         Location: "Channel Hill",
         Manager_Name: "Simon Marloe",
         Vice_Name: "Russell Brown",
-        Representative_Name: "Rob Jefferies"
+        Representative_Name: "Rob Jefferies",
+        Company: null,
+        Rank_of_Year: null
     },
     {
         ID: 3,
@@ -173,7 +188,9 @@ const gas_stations = [
         Location: "Reading North",
         Manager_Name: "Simon Cope Derek Marloe",
         Vice_Name: "James Colin",
-        Representative_Name: "Dave Edwards Roger"
+        Representative_Name: "Dave Edwards Roger",
+        Company: null,
+        Rank_of_Year: null
     },
     {
         ID: 4,
@@ -181,7 +198,9 @@ const gas_stations = [
         Location: "Herne St",
         Manager_Name: "Colin Denman",
         Vice_Name: "Martin Garnham",
-        Representative_Name: "Ray Hughes"
+        Representative_Name: "Ray Hughes",
+        Company: companies.filter(obj => obj.ID == 1),
+        Rank_of_Year: 13
     },
     {
         ID: 5,
@@ -189,7 +208,9 @@ const gas_stations = [
         Location: "Reading",
         Manager_Name: "Colin Denman",
         Vice_Name: "Martin Freeman",
-        Representative_Name: "Andrew Russell"
+        Representative_Name: "Andrew Russell",
+        Company: null,
+        Rank_of_Year: null
     },
     {
         ID: 6,
@@ -197,7 +218,9 @@ const gas_stations = [
         Location: "Herne Ave",
         Manager_Name: "Tom Whit",
         Vice_Name: "Simon Gaywood",
-        Representative_Name: "Tony Gibb"
+        Representative_Name: "Tony Gibb",
+        Company: companies.filter(obj => obj.ID == 6),
+        Rank_of_Year: 3
     },
     {
         ID: 7,
@@ -205,7 +228,9 @@ const gas_stations = [
         Location: "Henry Hill",
         Manager_Name: "Bryan Taylor",
         Vice_Name: "James Holland-Leader",
-        Representative_Name: "Simon Gaywood"
+        Representative_Name: "Simon Gaywood",
+        Company: companies.filter(obj => obj.ID == 9),
+        Rank_of_Year: 4
     },
     {
         ID: 8,
@@ -213,7 +238,9 @@ const gas_stations = [
         Location: "Jane Ave",
         Manager_Name: "Bryan Denman",
         Vice_Name: "James Holland-Leader",
-        Representative_Name: "Simon Gaywood"
+        Representative_Name: "Simon Gaywood",
+        Company: null,
+        Rank_of_Year: null
     },
     {
         ID: 9,
@@ -221,7 +248,9 @@ const gas_stations = [
         Location: "Maindy Hill",
         Manager_Name: "Tony Bristow",
         Vice_Name: "Jame Marloe",
-        Representative_Name: "Courtney Rowe"
+        Representative_Name: "Courtney Rowe",
+        Company: null,
+        Rank_of_Year: null
     },
     {
         ID: 10,
@@ -229,7 +258,9 @@ const gas_stations = [
         Location: "Maindy Ave",
         Manager_Name: "Luke Rowe",
         Vice_Name: "Tony Bristow",
-        Representative_Name: "Chris Pyatt"
+        Representative_Name: "Chris Pyatt",
+        Company: companies.filter(obj => obj.ID == 10),
+        Rank_of_Year: 9
     },
     {
         ID: 11,
@@ -237,7 +268,9 @@ const gas_stations = [
         Location: "Newport Rd",
         Manager_Name: "Jon Rowe",
         Vice_Name: "Steve Parsons",
-        Representative_Name: "Tim Read"
+        Representative_Name: "Tim Read",
+        Company: companies.filter(obj => obj.ID == 1),
+        Rank_of_Year: 1
     }
 ];
 const allTypes = {
@@ -267,7 +300,7 @@ const resolver = {
 const typeLevelNames = ['companies', 'gas_stations'];
 const fieldLevelNames = [
     ['ID', 'Rank', 'Name', 'Headquarters', 'Main_Industry', 'Sales', 'Profits', 'Assets', 'Market_Value', 'Stations'],
-    ['ID', 'Open_Year', 'Location', 'Manager_Name', 'Vice_Name', 'Representative_Name', 'Company']
+    ['ID', 'Open_Year', 'Location', 'Manager_Name', 'Vice_Name', 'Representative_Name', 'Company', 'Rank_of_Year']
 ];
 
 module.exports = { schema, resolvers };
