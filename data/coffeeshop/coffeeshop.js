@@ -141,17 +141,14 @@ const allTypes = {
 const resolver = {
     BaseType: {
         __resolveType(obj, context, info) {
-          if (obj.Age) {
-            return "Pilot"
+          if (obj.Open_Year) {
+            return "Shop"
           }
-          if (obj.Description) {
-            return "Aircraft"
+          if (obj.Membership_Card) {
+            return "Member"
           }
-          if (obj.Round) {
-            return "Match"
-          }
-          if (obj.Total_Ps) {
-            return "Airport"
+          if (obj.Month) {
+            return "HappyHour"
           }
         }
     },
