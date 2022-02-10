@@ -3,6 +3,7 @@ const prompt = require("prompt-sync")();
 const { identifyOperation, identifyType, identifyFields } = require("./nlqprocessing");
 const { buildQuery, buildCurl } = require("./utils");
 const https = require('https');
+var { typeLevelNames, fieldLevelNames } = require('./data/aircraft/aircraft');
 
 const similarityThreshold = 0.80;
 const operationTypes = ['avg', 'min', 'max'];
@@ -13,15 +14,15 @@ var rawInput = prompt("Please enter your query: ");
 // TODO: Get the type-level and field-level names
 // Type-level: array of strings e.g. ["Pilots", "Aircrafts"]
 // Field-level: array of arrays of strings e.g. [['Name', 'Age'], ['Model', 'Brand']] in order of type-level fields
-var typeLevelNames = [];
-var fieldLevelNames = [];
+//var typeLevelNames = [];
+//var fieldLevelNames = [];
 
 // SAMPLES
-typeLevelNames = ['pilots', 'aircrafts', 'airports', 'matches'];
-fieldLevelNames = [['ID', 'Name', 'Age', 'Email'],
-['ID', 'Name_Model', 'Description', 'Max_Weight', 'Total_disk_area', 'Max_disk_Loading'],
-['ID', 'Name', 'Total_Ps', 'Change_2007', 'International_Ps', 'Domestic_Ps', 'Transit_Ps', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
-['ID', 'Round', 'Location', 'Country', 'Date', 'Fastest_Qualifying', 'Winning_Pilot', 'Winning_Aircraft']];
+//typeLevelNames = ['pilots', 'aircrafts', 'airports', 'matches'];
+//fieldLevelNames = [['ID', 'Name', 'Age', 'Email'],
+//['ID', 'Name_Model', 'Description', 'Max_Weight', 'Total_disk_area', 'Max_disk_Loading'],
+//['ID', 'Name', 'Total_Ps', 'Change_2007', 'International_Ps', 'Domestic_Ps', 'Transit_Ps', 'Aircraft_Movements', 'Freight_Metric_Tonnes'],
+//['ID', 'Round', 'Location', 'Country', 'Date', 'Fastest_Qualifying', 'Winning_Pilot', 'Winning_Aircraft']];
 // SAMPLES
 
 // Find special (aggregated) operation types
