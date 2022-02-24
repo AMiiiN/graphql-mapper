@@ -3,7 +3,8 @@ const prompt = require("prompt-sync")();
 const { identifyOperation, identifyType, identifyFields } = require("./nlqprocessing");
 const { buildQuery, buildCurl } = require("./utils");
 const https = require('https');
-var { typeLevelNames, fieldLevelNames } = require('./data/aircraft/aircraft');
+var { typeLevelNames, fieldLevelNames } = require('./data/gascompany/gascompany');
+//var { typeLevelNames, fieldLevelNames } = require('./data/coffeeshop/coffeeshop');
 
 const similarityThreshold = 0.80;
 const operationTypes = ['avg', 'min', 'max'];

@@ -132,6 +132,19 @@ function identifyFields(rawInput, fieldNames, threshold) {
   return idFields;
 }
 
+function identifySpecificInstance(rawInput, fieldNames, threshold) {
+  var tokens = rawInput.split(" ");
+  tokens = cleanTokens(tokens);
+  var ratings = [];
+
+  tokens.forEach( (token) => {
+    // TODO
+    }
+  );
+
+  return null; // TODO
+}
+
 function cleanTokens(tokens) {
   var new_tokens = [];
   tokens.forEach( (token) => {
@@ -148,4 +161,4 @@ function cleanTokens(tokens) {
   return new_tokens;
 }
 
-module.exports = { identifyOperation, identifyType, identifyFields };
+module.exports = { identifyOperation, identifyType, identifyFields, identifySpecificInstance };
