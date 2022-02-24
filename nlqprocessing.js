@@ -1,7 +1,7 @@
 var prompt = require("prompt-sync")();
 var distance = require("jaro-winkler");
 
-function identifyOperation(rawInput, threshold) {
+function identifyOperation(rawInput, threshold, showInfo) {
   var tokens = rawInput.split(" ");
   tokens = cleanTokens(tokens);
   var ratings = [];
@@ -21,7 +21,8 @@ function identifyOperation(rawInput, threshold) {
     operationNamesAverage.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
+        if (showinfo)
+          console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'avg';
       }
     });
@@ -29,7 +30,8 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMin.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
+        if (showInfo)
+          console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'min';
       }
     });
@@ -37,7 +39,8 @@ function identifyOperation(rawInput, threshold) {
     operationNamesMax.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
+        if (showInfo)
+          console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'max';
       }
     });
@@ -45,7 +48,8 @@ function identifyOperation(rawInput, threshold) {
     operationNamesSum.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
+        if (showInfo)
+          console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'sum';
       }
     });
@@ -53,7 +57,8 @@ function identifyOperation(rawInput, threshold) {
     operationNamesCount.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
+        if (showInfo)
+          console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'count';
       }
     });
@@ -63,7 +68,7 @@ function identifyOperation(rawInput, threshold) {
   return identifiedOperation;  // no special operation type found in the query
 }
 
-function identifyType(rawInput, typeNames, threshold) {
+function identifyType(rawInput, typeNames, threshold, showInfo) {
   var tokens = rawInput.split(" ");
   tokens = cleanTokens(tokens);
   var ratings = [];
@@ -79,8 +84,10 @@ function identifyType(rawInput, typeNames, threshold) {
   });
 
   ratings = ratings.filter( (ratedObject) => ratedObject.similarity >= threshold);
-  console.log("Identified types: ");
-  console.log(ratings);
+  if (showInfo) {
+    console.log("Identified types: ");
+    console.log(ratings);
+  }
   var idTypeName;
 
   if (ratings.length == 1) {
@@ -106,7 +113,7 @@ function identifyType(rawInput, typeNames, threshold) {
   return idTypeName;
 }
 
-function identifyFields(rawInput, fieldNames, threshold) {
+function identifyFields(rawInput, fieldNames, threshold, showInfo) {
   var tokens = rawInput.split(" ");
   tokens = cleanTokens(tokens);
   var ratings = [];
@@ -123,8 +130,10 @@ function identifyFields(rawInput, fieldNames, threshold) {
 
   var idFields = [];
   ratings = ratings.filter( (ratedObject) => ratedObject.similarity >= threshold);
-  console.log("Identified fields: ");
-  console.log(ratings);
+  if (showInfo) {
+    console.log("Identified fields: ");
+    console.log(ratings);
+  }
   ratings.forEach( (ratedObject) => {
     idFields.push(ratedObject.name);
   });

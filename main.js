@@ -3,7 +3,7 @@ const prompt = require("prompt-sync")();
 const { identifyOperation, identifyType, identifyFields } = require("./nlqprocessing");
 const { buildQuery, buildCurl } = require("./utils");
 const https = require('https');
-var { typeLevelNames, fieldLevelNames } = require('./data/gascompany/gascompany');
+var { typeLevelNames, fieldLevelNames } = require('./data/aircraft/aircraft');
 //var { typeLevelNames, fieldLevelNames } = require('./data/coffeeshop/coffeeshop');
 
 const similarityThreshold = 0.80;
@@ -28,10 +28,10 @@ var rawInput = prompt("Please enter your query: ");
 
 // Find special (aggregated) operation types
 console.log("-------------------------------------------------");
-var operationTypeName = identifyOperation(rawInput, 0.9);
+var operationTypeName = identifyOperation(rawInput, 0.9, true);
 
 // Find the one with the highest similarity to the user input
-var idTypeName = identifyType(rawInput, typeLevelNames, similarityThreshold);
+var idTypeName = identifyType(rawInput, typeLevelNames, similarityThreshold, true);
 if (idTypeName == null) {
   console.log("\nError: No corresponding type found.");
   return;
@@ -42,7 +42,7 @@ var idTypeIndex = typeLevelNames.indexOf(idTypeName);
 fieldLevelNames = fieldLevelNames[idTypeIndex];
 
 // Identify the requested fields
-var idFieldNames = identifyFields(rawInput, fieldLevelNames, similarityThreshold);
+var idFieldNames = identifyFields(rawInput, fieldLevelNames, similarityThreshold, true);
 if (idFieldNames.length == 0) {
   console.log("\nError: No corresponding fields found.");
   return;
