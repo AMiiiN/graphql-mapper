@@ -21,7 +21,7 @@ function identifyOperation(rawInput, threshold, showInfo) {
     operationNamesAverage.forEach( (opToken) => {
       currentDist = distance(token, opToken);
       if (currentDist >= threshold) {
-        if (showinfo)
+        if (showInfo)
           console.log("Operation type found (token: " + token + ", type: " + opToken + ", similarity: " + currentDist + ")");
         identifiedOperation = 'avg';
       }
