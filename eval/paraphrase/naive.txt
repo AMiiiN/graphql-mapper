@@ -1,0 +1,174 @@
+57 questions loaded.
+------------
+Question 1: what are the last names of all the patients ?
+query MyQuery { patients { Last_Name } }
+------------
+Question 2: what are the first name and last names from patients where gender is male and age is greater than or equal to 18 ?
+query MyQuery { patients { First_Name, Last_Name, Gender, Age } }
+------------
+Question 3: what is the average age of all patients ?
+query MyQuery { avg(type: \"patients\", field: \"Age\") }
+------------
+Question 4: what is the count of patients where diagnosis is flu ?
+query MyQuery { count(type: \"patients\", field: \"Diagnosis\") }
+------------
+Question 5: for each diagnosis , what is the maximum age of patients ?
+query MyQuery { patients { Diagnosis, Age } }
+------------
+Question 6: for each diagnosis , what is the maximum age of patients where length of stay is greater than or equal to 3 ?
+query MyQuery { patients { Diagnosis, Age, Stay_length } }
+------------
+Question 7: what are the ages of all patients ?
+query MyQuery { patients { Age } }
+------------
+Question 8: what are the first names and ages of patients where gender equals male or age is greater than or equal to 18 ?
+query MyQuery { patients { First_Name, AgeGender, Age } }
+------------
+Question 9: what is the minimum age of patients ?
+query MyQuery { min(type: \"patients\", field: \"Age\") }
+------------
+Question 10: what is the minimum length of stay of patients where gender equals male ?
+query MyQuery { patients { Stay_length, Gender } }
+------------
+Question 11: for each gender , what is the minimum lengths of stay of patients ?
+query MyQuery { patients { Gender, Stay_length } }
+------------
+Question 12: for each gender , get the minimum length of stay of patients where diagnosis is equal to flu
+query MyQuery { patients { Gender, Stay_length, Diagnosis } }
+------------
+Question 13: show the last names and diagnosis of patients
+query MyQuery { patients { Last_Name, Diagnosis } }
+------------
+Question 14: what are the last names , age , and diagnosis of patients ?
+query MyQuery { patients { Last_Name, Age, Diagnosis } }
+------------
+Question 15: what are the first names , last names , and ages of patients ?
+query MyQuery { patients { First_Name, Last_Name, Age } }
+------------
+Question 16: find the last name and age of patients ?
+query MyQuery { patients { Last_Name, Age } }
+------------
+Question 17: what are the last names and diagnoses of patients ?
+query MyQuery { patients { Last_Name, Diagnosis } }
+------------
+Question 18: what are the last names and gender of patients ?
+query MyQuery { patients { Last_Name, Gender } }
+------------
+Question 19: what are the first names and last names of patients where age is greater than or equal to 20 and age is less than or equal to 30
+query MyQuery { patients { First_Name, Last_Name, AgeAge } }
+------------
+Question 20: what are the ages of patients where length of stay is greater than or equal to 3 ?
+query MyQuery { patients { Age, Stay_length } }
+------------
+Question 21: what are the ages of patients where length of stay is less than or equal to 3 ?
+query MyQuery { patients { Age, Stay_length } }
+------------
+Question 22: display the age of patients where length of stay is less than 3
+query MyQuery { patients { Age, Stay_length } }
+------------
+Question 23: what are the ages of patients where length of stay is greater than 3 ?
+query MyQuery { patients { Age, Stay_length } }
+------------
+Question 24: what are the last names and diagnosis of patients where gender is male or age is greater than 18 ?
+query MyQuery { patients { Last_Name, Diagnosis, Gender, Age } }
+------------
+Question 25: what is the sum of age of all patients ?
+query MyQuery { sum(type: \"patients\", field: \"Age\") }
+------------
+Question 26: what is the maximum length of stay of patients ?
+query MyQuery { max(type: \"patients\", field: \"Stay_length\") }
+------------
+Question 27: what is the number of patients ?
+
+Error: No corresponding fields found.
+query MyQuery { patients {  } }
+------------
+Question 28: what is the minimum length of stay of patients ?
+query MyQuery { min(type: \"patients\", field: \"Stay_length\") }
+------------
+Question 29: what is the sum of length of stay of patients ?
+query MyQuery { sum(type: \"patients\", field: \"Stay_length\") }
+------------
+Question 30: what is the number of patients where gender is male and age is greater than or equal to 18 ?
+query MyQuery { patients { Gender, Age } }
+------------
+Question 31: find the minimum length of stay of patients where age equals 18
+query MyQuery { patients { Stay_length, Age } }
+------------
+Question 32: what is the sum of age of all patients where diagnosis is not flu ?
+query MyQuery { patients { Age, Diagnosis } }
+------------
+Question 33: what is the sum of lengths of stay of patients where diagnosis is flu ?
+query MyQuery { patients { Stay_length, Diagnosis } }
+------------
+Question 34: what is the sum of age of patients where age is greater than or equal to 20 and age is less than or equal to 30 ?
+query MyQuery { patients { AgeAgeAge } }
+------------
+Question 35: what is the maximum length of stay of patients where age is less than 25 ?
+query MyQuery { patients { Stay_length, Age } }
+------------
+Question 36: for each gender , what is the sum of age of patients ?
+query MyQuery { patients { Gender, Age } }
+------------
+Question 37: for each gender , what is the number of patients ?
+query MyQuery { patients { Gender } }
+------------
+Question 38: for each diagnosis , what is the minimum length of stay of patients ?
+query MyQuery { patients { Diagnosis, Stay_length } }
+------------
+Question 39: for each gender , what is the sum of age of patients where age is greater than or equal to 18 ?
+query MyQuery { patients { Gender, AgeAge } }
+------------
+Question 40: for each diagnosis , what is the sum of length of stay of patients ?
+query MyQuery { patients { Diagnosis, Stay_length } }
+------------
+Question 41: for each diagnosis , what is the sum of age of patients ?
+query MyQuery { patients { Diagnosis, Age } }
+------------
+Question 42: for each gender , what is the sum of age of patients where length of stay is less or equal to 5 ?
+query MyQuery { patients { Gender, Age, Stay_length } }
+------------
+Question 43: for each diagnosis , what is the sum of length of stay of patients where age is greater than or equal to 20 and age is less than or equal to 30 ?
+query MyQuery { patients { Diagnosis, Stay_length, AgeAge } }
+------------
+Question 44: for each diagnosis , what is the sum of age of patients where length of stay is less than 6 ?
+query MyQuery { patients { Diagnosis, Age, Stay_length } }
+------------
+Question 45: for each gender , what is the sum of age of patients where diagnosis is flu ?
+query MyQuery { patients { Gender, Age, Diagnosis } }
+------------
+Question 46: for each gender , what is the number of patients where age is greater than or equal to 10 and age is less than or equal to 25
+query MyQuery { patients { Gender, AgeAge } }
+------------
+Question 47: for each diagnosis , what is the minimum length of stay of patients where first name is John
+query MyQuery { patients { Diagnosis, Stay_length, First_Name } }
+------------
+Question 48: what are the first names and last names of patients ?
+query MyQuery { patients { First_Name, Last_Name } }
+------------
+Question 49: what are the distinct diagnoses of patients ?
+query MyQuery { patients { Diagnosis } }
+------------
+Question 50: what are the first names and last names of patients where diagnosis is flu ?
+query MyQuery { patients { First_Name, Last_Name, Diagnosis } }
+------------
+Question 51: what are the first names and last names of patients where diagnosis is not flu ?
+query MyQuery { patients { First_Name, Last_Name, Diagnosis } }
+------------
+Question 52: what is the maximum age of patients
+query MyQuery { max(type: \"patients\", field: \"Age\") }
+------------
+Question 53: what is the average length of stay of patients
+query MyQuery { avg(type: \"patients\", field: \"Stay_length\") }
+------------
+Question 54: what is the maximum age of patients where gender is female and age is greater than or equal to 18 ?
+query MyQuery { patients { AgeGender, Age } }
+------------
+Question 55: what is the average length of stay of patients where age equals to 15 ?
+query MyQuery { patients { Stay_length, Age } }
+------------
+Question 56: for each diagnosis , what is the average length of stay of patients ?
+query MyQuery { patients { Diagnosis, Stay_length } }
+------------
+Question 57: for each diagnosis , what is the average length of stay of patients where gender is male ?
+query MyQuery { patients { Diagnosis, Stay_length, Gender } }
