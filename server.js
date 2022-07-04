@@ -5,8 +5,9 @@ const { ApolloServer, gql } = require('apollo-server');
 
 // Import GraphQL data
 //const data = require('./data/aircraft/aircraft');
-const data = require('./data/gascompany/gascompany');
+//const data = require('./data/gascompany/gascompany');
 //const data = require('./data/coffeeshop/coffeeshop');
+const data = require('./data/patients');
 
 const typeDefs = data.schema;
 const resolvers = data.resolver;
