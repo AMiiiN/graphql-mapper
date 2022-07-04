@@ -25,35 +25,45 @@ const operationTypes = ['avg', 'min', 'max'];
 const { identifyOperation, identifyType, identifyFields } = require("./nlqprocessing");
 
 var queries = [];
+var abort = false;
+
 // for each question
 for (var i=0; i<questions.length; i++) {
-    var { typeLevelNames, fieldLevelNames } = require('./data/aircraft/aircraft');
-    console.log("Question: " + questions[i]);
+    abort = false;
+    var { typeLevelNames, fieldLevelNames } = require('./data/patients');
+    console.log("------------\nQuestion " + (i+1) + ": " + questions[i]);
     // Find special (aggregated) operation types
     var operationTypeName = identifyOperation(questions[i], 0.9, false);
 
     // Find the one with the highest similarity to the user input
     var idTypeName = identifyType(questions[i], typeLevelNames, similarityThreshold, false);
     if (idTypeName == null) {
-        console.log("\nError: No corresponding type found.");
+        console.log("Error: No corresponding type found.");
         queries.push("No types found.");
+        abort = true;
     }
 
     // Filter the field-level names (keep only the ones that belong to the identified type)
-    var idTypeIndex = typeLevelNames.indexOf(idTypeName);
-    fieldLevelNames = fieldLevelNames[idTypeIndex];
-
+    if (!abort) {
+        var idTypeIndex = typeLevelNames.indexOf(idTypeName);
+        fieldLevelNames = fieldLevelNames[idTypeIndex];
+    }
+    
     // Identify the requested fields
-    var idFieldNames = identifyFields(questions[i], fieldLevelNames, similarityThreshold, false);
-    if (idFieldNames.length == 0) {
-        console.log("\nError: No corresponding fields found.");
-        queries.push("No fields found.");
+    if (!abort) {
+        var idFieldNames = identifyFields(questions[i], fieldLevelNames, similarityThreshold, false);
+        if (idFieldNames.length == 0) {
+            console.log("Error: No corresponding fields found.");
+            queries.push("No fields found.");
+        }
     }
 
     // Build the corresponding GraphQL query
-    var minimizedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, true);
-    console.log(minimizedQuery);
-    queries.push(minimizedQuery);
+    if (!abort) {
+        var minimizedQuery = buildQuery(operationTypeName, idTypeName, idFieldNames, true);
+        console.log(minimizedQuery);
+        queries.push(minimizedQuery);
+    }
 }
 
 // Write log
